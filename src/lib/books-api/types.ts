@@ -1,7 +1,12 @@
+// Book data extracted from google-books-api that we are interested in
+export type BookInfo = {};
+
+// Raw data returned from google-books-api
 export type VolumeInfo = {
+  id: string;
   title: string;
   subtitle: string;
-  authors: string[];
+  authors?: string[];
   publisher: string;
   publishedDate: string;
   description: string;
@@ -23,7 +28,7 @@ export type VolumeInfo = {
   averageRating: number;
   ratingsCount: number;
   contentVersion: string;
-  imageLinks: {
+  imageLinks?: {
     smallThumbnail: string;
     thumbnail: string;
     small: string;
