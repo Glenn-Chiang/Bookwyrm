@@ -10,11 +10,11 @@ export default function Home({searchParams}: {searchParams: { [key: string]: str
         <FontAwesomeIcon icon={faBookOpenReader}/>
         Bookwyrm
       </h1>
-      <section className="flex flex-col items-center">
+      <section className="flex flex-col w-full sm:w-4/5 p-4">
         <h2>Search for a book</h2>
         <Searchbar/>
-        <SearchResults searchTerm={searchParams.search as string | undefined}/>
       </section>
+      <SearchResults searchTerm={searchParams.search as string | undefined}/>
     </>
   )
 }

@@ -14,6 +14,6 @@ export const Searchbar = () => {
   }
 
   return (
-    <input onKeyDown={handleKeydown} className="border-b-2 focus:outline-none border-sky-500"/>
+    <input onKeyDown={handleKeydown} className="border-b-2 focus:outline-none border-sky-500 p-2"/>
   )
 }

@@ -21,7 +21,7 @@ export const SearchResults = async ({ searchTerm }: SearchResultsProps) => {
   const books = searchTerm ? await getBooksData(searchTerm) : [];
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 w-full sm:w-4/5">
       {books.map((book) => (
         <BookResult key={book.id} book={book} />
       ))}

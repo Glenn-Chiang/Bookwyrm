@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
-        <main className="flex min-h-screen flex-col items-center p-12">
+        <main className="flex min-h-screen flex-col items-center py-12 px-4">
           {children}
         </main>
       </body>
