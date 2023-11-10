@@ -1,5 +1,5 @@
 import { VolumeData, VolumeInfo } from "@/lib/books-api/types";
-import Image from "next/image";
+import { BookResult } from "./BookResult";
 
 type SearchResultsProps = {
   searchTerm: string | undefined;
@@ -12,28 +12,19 @@ const getBooksData = async (searchTerm: string) => {
   );
   const volumeResults: VolumeData[] = (await res.json()).items;
   const books: VolumeInfo[] = volumeResults.map((item) => {
-    return {...item.volumeInfo, id: item.id}
+    return { ...item.volumeInfo, id: item.id };
   });
-  return books
+  return books;
 };
 
 export const SearchResults = async ({ searchTerm }: SearchResultsProps) => {
   const books = searchTerm ? await getBooksData(searchTerm) : [];
 
-  return <section>
-    {books.map(book => <BookResult key={book.id} book={book}/>)}
-  </section>;
-};
-
-const BookResult = ({book}: {book: VolumeInfo}) => {
-  const {title, authors, publisher, publishedDate, imageLinks} = book
   return (
-    <article className="flex">
-      {imageLinks && imageLinks.thumbnail && <Image src={imageLinks.thumbnail} alt="" width={100} height={200}/>}
-      <div>
-        <div>{title}</div>
-        <div>{authors ? authors.join(', ') : '-'}</div>
-      </div>
-    </article>
-  )
-}
+    <section className="flex flex-col gap-4">
+      {books.map((book) => (
+        <BookResult key={book.id} book={book} />
+      ))}
+    </section>
+  );
+};
