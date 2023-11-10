@@ -8,7 +8,7 @@ type SearchResultsProps = {
 const getBooksData = async (searchTerm: string) => {
   const queryString = searchTerm?.split(" ").join("+");
   const res = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${queryString}&key=${process.env.BOOKS_API_KEY}`
+    `https://www.googleapis.com/books/v1/volumes?q=${queryString}&maxResults=${40}&key=${process.env.BOOKS_API_KEY}`
   );
   const volumeResults: VolumeData[] = (await res.json()).items;
   const books: VolumeInfo[] = volumeResults.map((item) => {
