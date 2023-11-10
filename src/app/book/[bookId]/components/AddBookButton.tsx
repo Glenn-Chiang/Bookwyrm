@@ -19,7 +19,7 @@ export const AddBookButton = ({ bookData }: AddBookButtonProps) => {
       >
         Add Book
       </button>
-      {modalIsOpen && <AddBookModal bookData={bookData} />}
+      {modalIsOpen && <AddBookModal bookData={bookData} close={() => setModalIsOpen(false)}/>}
     </>
   );
 };
