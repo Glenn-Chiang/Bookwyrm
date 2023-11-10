@@ -18,8 +18,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={""}>
-        <main className="flex min-h-screen flex-col items-center p-24">
+      <body className="">
+        <main className="flex min-h-screen flex-col items-center p-12">
           {children}
         </main>
       </body>
