@@ -27,27 +27,35 @@ export default async function BookPage({
     imageLinks,
     description,
     categories,
-    ratingsCount,
-    averageRating
   } = bookData;
 
   return (
     <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start">
-      {imageLinks && imageLinks.large && (
+      {imageLinks && (
         <Image
-          src={imageLinks.large}
+          src={imageLinks.large || imageLinks.thumbnail}
           alt=""
           width={200}
           height={400}
           className="rounded w-48 h-80"
         />
       )}
-      <div className="flex flex-col w-full p-4 gap-4">
+      <section className="flex flex-col w-full p-4 gap-4">
         <h1>{title}</h1>
         {authors && <div className="text-xl">{authors.join(", ")}</div>}
-        {publisher && <div className="text-slate-500">{publisher}</div>}
+        <div className="text-slate-500 gap-2 flex">
+          {publisher && <span>{publisher}</span>}
+          {publishedDate && <span>({publishedDate})</span>}
+        </div>
+
+        <div className="text-slate-500">
+          {categories.join(', ')}
+        </div>
+
+        <div className="text-slate-500">{pageCount} pages</div>
+
         {description && <p className="">{stripTags(description)}</p>}
-      </div>
+      </section>
     </main>
   );
 }
