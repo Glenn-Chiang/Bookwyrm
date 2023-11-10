@@ -1,0 +1,1 @@
+export type ReadStatus = 'completed' | 'reading' | 'plan-to-read'
