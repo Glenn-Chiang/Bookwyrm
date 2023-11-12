@@ -11,21 +11,43 @@ model User {
   id Int @id @default(autoincrement())
   username String @unique
   shelves Shelf[]
-  books Book[]
+  books UserBook[]
+}
+
+model UserBook {
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  bookId String
+  book Book @relation(fields: [bookId], references: [id])
+  @@id([userId, bookId])
+  dateAdded DateTime @default(now())
+  status String // 'completed', 'reading', 'plan-to-read'
+  rating Int? // 1-10 or null
 }
 
 model Book {
   id String @id
   title String
+  thumbnail String? // url to cover img
   authors String[]
-  readers User[]
-  shelves Shelf[]
+  users UserBook[]
+  shelves ShelfBook[]
+}
+
+model ShelfBook {
+  bookId String
+  book Book @relation(fields: [bookId], references: [id])
+  shelfId Int
+  shelf Shelf @relation(fields: [shelfId], references: [id])
+  dateAdded DateTime @default(now()) // Date when this book was addded to this shelf
+  @@id([bookId, shelfId])
 }
 
 model Shelf {
   id Int @id @default(autoincrement())
   shelfname String @unique
-  ownerId Int
-  owner User @relation(fields: [ownerId], references: [id])
-  books Book[]
+  createdAt DateTime @default(now())
+  creatorId Int
+  creator User @relation(fields: [creatorId], references: [id])
+  books ShelfBook[]
 }
