@@ -17,7 +17,7 @@ export const AddBookButton = ({ bookData }: AddBookButtonProps) => {
         onClick={() => setModalIsOpen(true)}
         className="bg-sky-100 hover:bg-sky-200 text-sky-500 hover:text-sky-600 font-medium"
       >
-        Add Book
+        Add to Library
       </button>
       {modalIsOpen && <AddBookModal bookData={bookData} close={() => setModalIsOpen(false)}/>}
     </>
