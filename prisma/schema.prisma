@@ -18,18 +18,24 @@ model User {
 model UserBook {
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId String
+  book Book @relation(fields: [bookId], references: [id])
+  shelves   ShelfBook[]
 
   dateAdded DateTime @default(now())
   status    String // 'completed', 'reading', 'plan-to-read'
   rating    Int? // 1-10 or null
 
-  bookId    String
+  @@id([userId, bookId])
+}
+
+model Book {
+  id String @id
   title     String
   thumbnail String? // url to cover img
   authors   String[]
-  shelves   ShelfBook[]
 
-  @@id([userId, bookId])
+  users UserBook[]
 }
 
 model ShelfBook {

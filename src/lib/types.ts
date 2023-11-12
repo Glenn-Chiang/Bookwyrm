@@ -1,6 +1,6 @@
 export type ReadStatus = "completed" | "reading" | "plan-to-read";
 
-export type UserBookData = {
+export type BookData = {
   id: string;
   title: string;
   authors: string[];

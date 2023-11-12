@@ -1,21 +1,35 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { ReadStatus, UserBookData } from "@/lib/types";
+import { ReadStatus, BookData } from "@/lib/types";
+
+// Get books in user's library with given status. If status is not specified, get all books in user's library.
+export const getUserBooks = async (userId: string) => {
+  const books = await prisma.userBook.findMany({});
+};
 
 // Add book to user's library. A user can only have 1 entry of each book in their library.
-export const addBookToUser = async (bookData: UserBookData) => {
+export const addBookToUser = async (
+  bookData: BookData,
+  status: ReadStatus,
+  rating: number
+) => {
+  const { id: bookId, title, authors, thumbnail } = bookData;
   const userId = (await getCurrentUser()).id;
 
-  const { id: bookId, title, authors, thumbnail, status, rating } = bookData;
+  // Create entry for book if no user has added this book before
+  await prisma.book.upsert({
+    where: {
+      id: bookId,
+    },
+    update: {},
+    create: { id: bookId, title, authors, thumbnail },
+  });
 
   const userBook = await prisma.userBook.create({
     data: {
       userId,
       bookId,
-      title,
-      authors,
-      thumbnail,
       status,
       rating,
     },
@@ -76,4 +90,3 @@ export const updateBookRating = async (bookId: string, rating: number) => {
 
   return userBook;
 };
-
