@@ -8,46 +8,47 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  shelves Shelf[]
-  books UserBook[]
+  id        Int         @id @default(autoincrement())
+  username  String      @unique
+  shelves   Shelf[]
+  books     UserBook[] // all books added by user 
+  shelfBooks ShelfBook[] // books added by user to specific shelves
 }
 
 model UserBook {
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  bookId String
-  book Book @relation(fields: [bookId], references: [id])
-  @@id([userId, bookId])
-  dateAdded DateTime @default(now())
-  status String // 'completed', 'reading', 'plan-to-read'
-  rating Int? // 1-10 or null
-}
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 
-model Book {
-  id String @id
-  title String
+  dateAdded DateTime @default(now())
+  status    String // 'completed', 'reading', 'plan-to-read'
+  rating    Int? // 1-10 or null
+
+  bookId    String
+  title     String
   thumbnail String? // url to cover img
-  authors String[]
-  users UserBook[]
-  shelves ShelfBook[]
+  authors   String[]
+  shelves   ShelfBook[]
+
+  @@id([userId, bookId])
 }
 
 model ShelfBook {
-  bookId String
-  book Book @relation(fields: [bookId], references: [id])
-  shelfId Int
-  shelf Shelf @relation(fields: [shelfId], references: [id])
-  dateAdded DateTime @default(now()) // Date when this book was addded to this shelf
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  bookId    String
+  book      UserBook @relation(fields: [userId, bookId], references: [userId, bookId])
+  shelfId   Int
+  shelf     Shelf    @relation(fields: [shelfId], references: [id])
+  dateAdded DateTime @default(now()) // Date when this book was added to this shelf
+
   @@id([bookId, shelfId])
 }
 
 model Shelf {
-  id Int @id @default(autoincrement())
-  shelfname String @unique
-  createdAt DateTime @default(now())
+  id        Int         @id @default(autoincrement())
+  shelfname String      @unique
+  createdAt DateTime    @default(now())
   creatorId Int
-  creator User @relation(fields: [creatorId], references: [id])
-  books ShelfBook[]
+  creator   User        @relation(fields: [creatorId], references: [id])
+  books     ShelfBook[]
 }
