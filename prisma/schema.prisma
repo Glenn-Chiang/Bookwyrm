@@ -17,7 +17,7 @@ model User {
 
 model UserBook {
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   dateAdded DateTime @default(now())
   status    String // 'completed', 'reading', 'plan-to-read'
@@ -34,21 +34,21 @@ model UserBook {
 
 model ShelfBook {
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   bookId    String
-  book      UserBook @relation(fields: [userId, bookId], references: [userId, bookId])
-  shelfId   Int
-  shelf     Shelf    @relation(fields: [shelfId], references: [id])
+  book      UserBook @relation(fields: [userId, bookId], references: [userId, bookId], onDelete: Cascade)
+  shelfname String
+  shelf     Shelf    @relation(fields: [userId, shelfname], references: [creatorId, shelfname], onDelete: Cascade)
   dateAdded DateTime @default(now()) // Date when this book was added to this shelf
 
-  @@id([bookId, shelfId])
+  @@id([userId, shelfname, bookId])
 }
 
 model Shelf {
-  id        Int         @id @default(autoincrement())
-  shelfname String      @unique
+  shelfname String      
   createdAt DateTime    @default(now())
   creatorId Int
-  creator   User        @relation(fields: [creatorId], references: [id])
+  creator   User        @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   books     ShelfBook[]
+  @@id([creatorId, shelfname])
 }
