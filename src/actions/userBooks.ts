@@ -4,9 +4,28 @@ import prisma from "@/lib/db";
 import { ReadStatus, BookData } from "@/lib/types";
 
 // Get books in user's library with given status. If status is not specified, get all books in user's library.
-export const getUserBooks = async (userId: string) => {
-  const books = await prisma.userBook.findMany({});
+export const getUserBooks = async (userId: number) => {
+  const userBooks = await prisma.userBook.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      book: true,
+    },
+  });
+  return userBooks
 };
+
+export const getUserBook = async (userId: number, bookId: string) => {
+  const userBook = await prisma.userBook.findUnique({
+    where: {
+      userId_bookId: {
+        userId, bookId
+      }
+    }
+  })
+  return userBook
+}
 
 // Add book to user's library. A user can only have 1 entry of each book in their library.
 export const addBookToUser = async (

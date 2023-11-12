@@ -15,6 +15,7 @@ model User {
   shelfBooks ShelfBook[] // books added by user to specific shelves
 }
 
+// UserBook contains metadata unique to relationship between this user and this book
 model UserBook {
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

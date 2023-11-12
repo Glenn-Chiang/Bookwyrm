@@ -2,6 +2,22 @@
 
 import prisma from "@/lib/db";
 
+export const getShelfBooks = async (userId: number, shelfname: string) => {
+  const shelfBooks = await prisma.shelfBook.findMany({
+    where: {
+      userId, shelfname
+    },
+    include: {
+      book: {
+        include: {
+          book: true
+        }
+      }
+    }
+  })  
+  return shelfBooks
+}
+
 export const addBookToShelf = async (shelfname: string, bookId: string) => {
   const userId = (await getCurrentUser()).id;
 
