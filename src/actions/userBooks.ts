@@ -75,6 +75,7 @@ export const removeBookFromUser = async (bookId: string) => {
     },
   });
 
+  revalidatePath("/");
   return userBook;
 };
 
@@ -94,6 +95,7 @@ export const updateBookStatus = async (bookId: string, status: ReadStatus) => {
     },
   });
 
+  revalidatePath("/");
   return userBook;
 };
 
@@ -112,5 +114,6 @@ export const updateBookRating = async (bookId: string, rating: number) => {
     },
   });
 
+  revalidatePath("/");
   return userBook;
 };
