@@ -1,10 +1,13 @@
 import { getUserBooks } from "@/actions/userBooks";
-import { BookEntry } from "./BookEntry";
+import { BookEntry } from "./components/BookEntry";
+import { FilterMenu } from "./components/FilterMenu";
 
 export default async function Library({
   params,
+  searchParams,
 }: {
   params: { userId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const userId = Number(params.userId);
   const books = await getUserBooks(userId);
@@ -12,7 +15,8 @@ export default async function Library({
   return (
     <>
       <h1 className="text-center p-4">Library</h1>
-      <ul className="flex flex-col w-full">
+      <FilterMenu />
+      <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {books.map((book) => (
           <BookEntry key={book.bookId} userBook={book} />
         ))}

@@ -15,4 +15,7 @@
   button {
     @apply transition p-2 rounded-md shadow
   }
+  a {
+    @apply transition
+  }
 }

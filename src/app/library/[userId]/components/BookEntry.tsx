@@ -3,38 +3,43 @@ import { RatingDropdown } from "@/components/RatingDropdown";
 import { StatusDropdown } from "@/components/StatusDropdown";
 import { ReadStatus, UserBookDetail } from "@/lib/types";
 import Image from "next/image";
+import Link from "next/link";
 
 type BookEntryProps = {
   userBook: UserBookDetail;
 };
 
 export const BookEntry = ({ userBook }: BookEntryProps) => {
-  const { thumbnail, title, authors } = userBook.book;
+  const { id: bookId, thumbnail, title, authors } = userBook.book;
 
   const handleStatusChange = async (status: ReadStatus) => {
     "use server";
-    await updateBookStatus(userBook.bookId, status)
+    await updateBookStatus(bookId, status)
   };
 
   const handleRatingChange = async (rating: number | null) => {
     "use server";
-    await updateBookRating(userBook.bookId, rating)
+    await updateBookRating(bookId, rating)
   };
 
   return (
-    <article className="flex gap-4 p-4 w-full">
+    <article className="flex gap-4 p-4 ">
       {thumbnail && (
-        <Image
-          src={thumbnail}
-          alt=""
-          width={100}
-          height={200}
-          className="rounded w-28 h-40"
-        />
+        <Link href={`/book/${bookId}`} >
+          <Image
+            src={thumbnail}
+            alt=""
+            width={112}
+            height={160}
+            className="rounded w-28 h-40"
+          />
+        </Link>
       )}
       <div className="flex flex-col gap-4">
         <div>
-          <h2>{title}</h2>
+          <Link href={`/book/${bookId}`} className="hover:text-sky-500">
+            <h2>{title}</h2>
+          </Link>
           <div>{authors.join(", ")}</div>
         </div>
         <div className="flex flex-col gap-2">
