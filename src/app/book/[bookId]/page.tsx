@@ -1,4 +1,8 @@
-import { getUserBook, updateBookRating, updateBookStatus } from "@/actions/userBooks";
+import {
+  getUserBook,
+  updateBookRating,
+  updateBookStatus,
+} from "@/actions/userBooks";
 import { RatingDropdown } from "@/components/RatingDropdown";
 import { StatusDropdown } from "@/components/StatusDropdown";
 import { VolumeInfo } from "@/lib/books-api/types";
@@ -31,18 +35,18 @@ export default async function BookPage({
     id: bookId,
     title,
     authors,
-    thumbnail: imageLinks?.thumbnail,
+    thumbnail: imageLinks?.large || imageLinks?.thumbnail,
   };
 
   const handleStatusChange = async (status: ReadStatus) => {
-    "use server"
-    await updateBookStatus(bookId, status)
-  }
+    "use server";
+    await updateBookStatus(bookId, status);
+  };
 
   const handleRatingChange = async (rating: number | null) => {
-    "use server"
-    await updateBookRating(bookId, rating)
-  }
+    "use server";
+    await updateBookRating(bookId, rating);
+  };
 
   return (
     <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start">
@@ -58,13 +62,23 @@ export default async function BookPage({
         )}
         {!userBook && <AddBookButton bookData={bookData} />}
         {userBook && (
-          <StatusDropdown defaultValue={userBook.status as ReadStatus} handleChange={handleStatusChange}/>
+          <StatusDropdown
+            defaultValue={userBook.status as ReadStatus}
+            handleChange={handleStatusChange}
+          />
         )}
         {userBook && userBook.status === "completed" && (
-          <RatingDropdown defaultValue={userBook.rating} handleChange={handleRatingChange}/>
+          <RatingDropdown
+            defaultValue={userBook.rating}
+            handleChange={handleRatingChange}
+          />
         )}
         {userBook && (
-          <RemoveBookButton bookId={bookId}/>
+          <>
+            <span className="text-slate-500">Added on {userBook.dateAdded.toLocaleDateString()}</span>
+            <span className="text-slate-500">Last updated {userBook.updatedAt.toLocaleDateString()}</span>
+            <RemoveBookButton bookId={bookId} />
+          </>
         )}
       </section>
       <InfoSection volumeInfo={volumeInfo} />

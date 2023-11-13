@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export type ReadStatus = "completed" | "reading" | "plan-to-read";
 
 export type BookData = {
@@ -6,3 +8,11 @@ export type BookData = {
   authors?: string[];
   thumbnail?: string;
 };
+
+const userBookDetail = Prisma.validator<Prisma.UserBookDefaultArgs>()({
+  include: {
+    book: true
+  }
+})
+
+export type UserBookDetail = Prisma.UserBookGetPayload<typeof userBookDetail>

@@ -22,11 +22,11 @@ export const StatusDropdown = ({
     },
     {
       value: "reading",
-      style: "bg-sky-100 text-sky-500"
+      style: "bg-sky-50 text-sky-500"
     },
     {
       value: "plan-to-read",
-      style: "bg-amber-100 text-amber-500"
+      style: "bg-amber-50 text-amber-500"
     }
   ]
   const [status, setStatus] = useState(defaultValue)
