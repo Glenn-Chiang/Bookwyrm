@@ -6,6 +6,7 @@ import { stripTags } from "@/lib/helpers/stripTags";
 import { BookData, ReadStatus } from "@/lib/types";
 import Image from "next/image";
 import { AddBookButton } from "./components/AddBookButton";
+import { RemoveBookButton } from "./components/RemoveBookButton";
 
 const getVolumeInfo = async (bookId: string) => {
   const res = await fetch(
@@ -61,6 +62,9 @@ export default async function BookPage({
         )}
         {userBook && userBook.rating && (
           <RatingDropdown defaultValue={userBook.rating} handleChange={handleRatingChange}/>
+        )}
+        {userBook && (
+          <RemoveBookButton bookId={bookId}/>
         )}
       </section>
       <InfoSection volumeInfo={volumeInfo} />
