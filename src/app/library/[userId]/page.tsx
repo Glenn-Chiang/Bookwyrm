@@ -16,7 +16,7 @@ export default async function Library({
 
   return (
     <>
-      <h1 className="text-center p-4">Library</h1>
+      <h1 className="text-center pt-4">Library</h1>
       <FilterMenu />
       <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {books.map((book) => (

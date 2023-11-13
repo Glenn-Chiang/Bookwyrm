@@ -1,23 +1,52 @@
 "use client";
 
 import { statusOptions } from "@/lib/constants";
+import {
+  IconDefinition,
+  faBookOpen,
+  faCalendar,
+  faCalendarCheck,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+type Label = {
+  text: string;
+  icon?: IconDefinition;
+};
+
 export const FilterMenu = () => {
-  const filterLabels = ["all"].concat(statusOptions);
+  const filterLabels: Label[] = [
+    {
+      text: "all",
+    },
+    {
+      text: "completed",
+      icon: faCheckCircle,
+    },
+    {
+      text: "reading",
+      icon: faBookOpen,
+    },
+    {
+      text: "plan-to-read",
+      icon: faCalendarCheck,
+    },
+  ];
 
   return (
-    <section className="p-4 capitalize flex gap-2">
-      {filterLabels.map((label, index) => (
-        <FilterTab key={index} filterLabel={label} />
+    <section className="w-full p-4 capitalize flex gap-2 overflow-x-scroll sm:overflow-auto justify-between sm:justify-center items-center">
+      {filterLabels.map((filter, index) => (
+        <FilterTab key={index} filterLabel={filter} />
       ))}
     </section>
   );
 };
 
 type FilterTabProps = {
-  filterLabel: string;
+  filterLabel: Label;
 };
 
 const FilterTab = ({ filterLabel }: FilterTabProps) => {
@@ -27,17 +56,18 @@ const FilterTab = ({ filterLabel }: FilterTabProps) => {
   // check if this filter is currently selected
   // if no filter is specified in query param, show 'all' as selected by default
   const isActive = currentFilter
-    ? currentFilter === filterLabel
-    : filterLabel === "all";
+    ? currentFilter === filterLabel.text
+    : filterLabel.text === "all";
 
   return (
     <Link
-      href={`?status=${filterLabel}`}
-      className={` rounded-full p-2 ${
-        isActive ? "bg-sky-100 text-sky-500" : ""
+      href={`?status=${filterLabel.text}`}
+      className={`min-w-max rounded-full p-2 flex gap-2 items-center ${
+        isActive && "bg-sky-100 text-sky-500" 
       }`}
     >
-      {filterLabel}
+      {filterLabel.icon && <FontAwesomeIcon icon={filterLabel.icon} />}
+      {filterLabel.text}
     </Link>
   );
 };

@@ -31,7 +31,7 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
             alt=""
             width={112}
             height={160}
-            className="rounded w-28 h-40"
+            className="rounded w-28 "
           />
         </Link>
       )}
