@@ -1,6 +1,7 @@
 import { getUserBooks } from "@/actions/userBooks";
 import { BookEntry } from "./components/BookEntry";
 import { FilterMenu } from "./components/FilterMenu";
+import { ReadStatus } from "@/lib/types";
 
 export default async function Library({
   params,
@@ -10,7 +11,8 @@ export default async function Library({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const userId = Number(params.userId);
-  const books = await getUserBooks(userId);
+  const statusFilter = searchParams.status === 'all' ? undefined : searchParams.status
+  const books = await getUserBooks(userId, statusFilter);
 
   return (
     <>

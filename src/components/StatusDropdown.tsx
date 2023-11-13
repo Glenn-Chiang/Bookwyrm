@@ -22,19 +22,17 @@ export const StatusDropdown = ({
     },
     {
       value: "reading",
-      style: "bg-sky-50 text-sky-500"
+      style: "bg-sky-100 text-sky-500"
     },
     {
       value: "plan-to-read",
-      style: "bg-amber-50 text-amber-500"
+      style: "bg-amber-100 text-amber-500"
     }
   ]
-  const [status, setStatus] = useState(defaultValue)
-  const style = statusOptions.find(option => option.value === status)?.style
+  const style = statusOptions.find(option => option.value === defaultValue)?.style
 
   const onChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     handleChange(event.target.value as ReadStatus);
-    setStatus(event.target.value as ReadStatus)
   };
 
   return (
@@ -46,7 +44,7 @@ export const StatusDropdown = ({
       <select
         id="status"
         className={`p-2 rounded-md capitalize bg-slate-100 ${style}`}
-        value={status}
+        value={defaultValue}
         onChange={onChange}
       >
         {statusOptions.map((status, index) => (

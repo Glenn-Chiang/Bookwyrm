@@ -4,12 +4,21 @@ import prisma from "@/lib/db";
 import { ReadStatus, BookData } from "@/lib/types";
 import { getCurrentUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { statusOptions } from "@/lib/constants";
 
 // Get books in user's library with given status. If status is not specified, get all books in user's library.
-export const getUserBooks = async (userId: number) => {
+export const getUserBooks = async (userId: number, status?: string | string[]) => {
+  if (status && typeof status !== 'string') {
+    status = undefined
+  }
+  if (status && !(statusOptions.includes(status))) { // if invalid status is provided, set status param to undefined, i.e. get all user books
+    status = undefined
+  }
+
   const userBooks = await prisma.userBook.findMany({
     where: {
       userId,
+      status
     },
     include: {
       book: true,
