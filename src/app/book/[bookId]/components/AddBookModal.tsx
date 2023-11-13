@@ -16,12 +16,12 @@ type AddBookModalProps = {
 export const AddBookModal = ({ bookData, close }: AddBookModalProps) => {
   const [isPending, setIsPending] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<ReadStatus>("completed");
-  const [selectedRating, setSelectedRating] = useState(10);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
     setIsPending(true);
-    const rating = selectedStatus === 'completed' ? selectedRating : undefined
+    const rating = selectedStatus === 'completed' ? selectedRating : null // If status is not completed, rating must be null
     const userBook = await addBookToUser(bookData, selectedStatus, rating);
     close()
     setIsPending(false);
@@ -41,7 +41,7 @@ export const AddBookModal = ({ bookData, close }: AddBookModalProps) => {
         />
         {selectedStatus === "completed" && (
           <RatingDropdown
-            defaultValue={selectedRating}
+            defaultValue={selectedRating }
             handleChange={(rating) => setSelectedRating(rating)}
           />
         )}

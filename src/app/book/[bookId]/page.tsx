@@ -39,7 +39,7 @@ export default async function BookPage({
     await updateBookStatus(bookId, status)
   }
 
-  const handleRatingChange = async (rating: number) => {
+  const handleRatingChange = async (rating: number | null) => {
     "use server"
     await updateBookRating(bookId, rating)
   }
@@ -60,7 +60,7 @@ export default async function BookPage({
         {userBook && (
           <StatusDropdown defaultValue={userBook.status as ReadStatus} handleChange={handleStatusChange}/>
         )}
-        {userBook && userBook.rating && (
+        {userBook && userBook.status === "completed" && (
           <RatingDropdown defaultValue={userBook.rating} handleChange={handleRatingChange}/>
         )}
         {userBook && (

@@ -35,7 +35,7 @@ export const getUserBook = async (bookId: string) => {
 export const addBookToUser = async (
   bookData: BookData,
   status: ReadStatus,
-  rating?: number 
+  rating: number | null
 ) => {
   // If status is not "completed", rating must be undefined
   if (status !== 'completed' && rating) {
@@ -104,7 +104,7 @@ export const updateBookStatus = async (bookId: string, status: ReadStatus) => {
   return userBook;
 };
 
-export const updateBookRating = async (bookId: string, rating: number) => {
+export const updateBookRating = async (bookId: string, rating: number | null) => {
   const userId = (await getCurrentUser()).id;
 
   const userBook = await prisma.userBook.update({
