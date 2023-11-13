@@ -1,9 +1,9 @@
 const currentUser = {id: 1}
 
-const useCurrentUser = () => {
+export const useCurrentUser = () => {
   return currentUser
 }
 
-const getCurrentUser = async () => {
+export const getCurrentUser = async () => {
   return currentUser
 }

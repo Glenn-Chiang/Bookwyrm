@@ -3,9 +3,10 @@
 import { VolumeInfo } from "@/lib/books-api/types";
 import { useState } from "react";
 import { AddBookModal } from "./AddBookModal";
+import { BookData } from "@/lib/types";
 
 type AddBookButtonProps = {
-  bookData: VolumeInfo;
+  bookData: BookData;
 };
 
 export const AddBookButton = ({ bookData }: AddBookButtonProps) => {

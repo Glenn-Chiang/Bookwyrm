@@ -1,29 +1,31 @@
 import { VolumeData, VolumeInfo } from "@/lib/books-api/types";
-import { BookResult } from "./BookResult";
+import { VolumeResult } from "./VolumeResult";
 
 type SearchResultsProps = {
   searchTerm: string | undefined;
 };
 
-const getBooksData = async (searchTerm: string) => {
+const getVolumes = async (searchTerm: string) => {
   const queryString = searchTerm?.split(" ").join("+");
   const res = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=${queryString}&maxResults=${40}&key=${process.env.BOOKS_API_KEY}`
+    `https://www.googleapis.com/books/v1/volumes?q=${queryString}&maxResults=${40}&key=${
+      process.env.BOOKS_API_KEY
+    }`
   );
   const volumeResults: VolumeData[] = (await res.json()).items;
-  const books: VolumeInfo[] = volumeResults.map((item) => {
+  const volumes = volumeResults.map((item) => {
     return { ...item.volumeInfo, id: item.id };
   });
-  return books;
+  return volumes;
 };
 
 export const SearchResults = async ({ searchTerm }: SearchResultsProps) => {
-  const books = searchTerm ? await getBooksData(searchTerm) : [];
+  const volumes = searchTerm ? await getVolumes(searchTerm) : [];
 
   return (
     <section className="flex flex-col gap-4 w-full sm:w-4/5">
-      {books.map((book) => (
-        <BookResult key={book.id} book={book} />
+      {volumes.map((volume) => (
+        <VolumeResult key={volume.id} volumeId={volume.id} volumeInfo={volume}/>
       ))}
     </section>
   );

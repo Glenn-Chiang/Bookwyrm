@@ -1,14 +1,14 @@
-import { VolumeInfo } from "@/lib/books-api/types";
+import { VolumeInfo, VolumeData } from "@/lib/books-api/types";
 import Image from "next/image";
 import { AddBookButton } from "./components/AddBookButton";
+import { BookData } from "@/lib/types";
 
-const getBookData = async (bookId: string) => {
+const getVolumeInfo = async (bookId: string) => {
   const res = await fetch(
     `https://www.googleapis.com/books/v1/volumes/${bookId}?key=${process.env.BOOKS_API_KEY}`
   );
-  const bookData: VolumeInfo = (await res.json()).volumeInfo;
-  console.log(bookData);
-  return bookData;
+  const volumeInfo: VolumeInfo = (await res.json()).volumeInfo
+  return volumeInfo;
 };
 
 export default async function BookPage({
@@ -17,7 +17,7 @@ export default async function BookPage({
   params: { bookId: string };
 }) {
   const bookId = params.bookId;
-  const bookData = await getBookData(bookId);
+  const volumeInfo = await getVolumeInfo(bookId);
 
   const {
     title,
@@ -28,7 +28,9 @@ export default async function BookPage({
     imageLinks,
     description,
     categories,
-  } = bookData;
+  } = volumeInfo;
+
+  const bookData: BookData = {id: bookId, title, authors, thumbnail: imageLinks?.thumbnail}
 
   return (
     <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start">

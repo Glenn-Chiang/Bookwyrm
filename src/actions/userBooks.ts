@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/db";
 import { ReadStatus, BookData } from "@/lib/types";
+import { getCurrentUser } from "@/lib/auth";
 
 // Get books in user's library with given status. If status is not specified, get all books in user's library.
 export const getUserBooks = async (userId: number) => {
@@ -34,6 +35,7 @@ export const addBookToUser = async (
   rating: number
 ) => {
   const { id: bookId, title, authors, thumbnail } = bookData;
+  console.log(bookData)
   const userId = (await getCurrentUser()).id;
 
   // Create entry for book if no user has added this book before
