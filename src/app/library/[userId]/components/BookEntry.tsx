@@ -14,24 +14,24 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
 
   const handleStatusChange = async (status: ReadStatus) => {
     "use server";
-    await updateBookStatus(bookId, status)
+    await updateBookStatus(bookId, status);
   };
 
   const handleRatingChange = async (rating: number | null) => {
     "use server";
-    await updateBookRating(bookId, rating)
+    await updateBookRating(bookId, rating);
   };
 
   return (
-    <article className="flex gap-4 p-4 ">
+    <article className="flex gap-4 p-4">
       {thumbnail && (
-        <Link href={`/book/${bookId}`} >
+        <Link href={`/book/${bookId}`} className="w-1/3">
           <Image
             src={thumbnail}
             alt=""
-            width={112}
-            height={160}
-            className="rounded w-28 "
+            width={100} // this is arbitrary. we are using css to set the size
+            height={100} // this is arbitrary. we are using css to set the size
+            className="rounded w-full h-auto"
           />
         </Link>
       )}

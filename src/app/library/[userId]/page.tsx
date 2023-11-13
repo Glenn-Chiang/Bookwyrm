@@ -18,11 +18,14 @@ export default async function Library({
     <>
       <h1 className="text-center pt-4">Library</h1>
       <FilterMenu />
-      <ul className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+      {books.length ? 
+      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {books.map((book) => (
           <BookEntry key={book.bookId} userBook={book} />
         ))}
       </ul>
+      : <p className="text-slate-500 text-center">No books to display</p>
+    }
     </>
   );
 }
