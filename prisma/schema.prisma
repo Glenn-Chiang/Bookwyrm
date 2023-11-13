@@ -25,7 +25,7 @@ model UserBook {
 
   dateAdded DateTime @default(now())
   status    String // 'completed', 'reading', 'plan-to-read'
-  rating    Int? // 1-10 or null
+  rating    Int? // 1-10 or null. Only 'completed' books have a rating.
 
   @@id([userId, bookId])
 }

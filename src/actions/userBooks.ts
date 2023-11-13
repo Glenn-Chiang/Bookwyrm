@@ -3,6 +3,7 @@
 import prisma from "@/lib/db";
 import { ReadStatus, BookData } from "@/lib/types";
 import { getCurrentUser } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 // Get books in user's library with given status. If status is not specified, get all books in user's library.
 export const getUserBooks = async (userId: number) => {
@@ -17,7 +18,9 @@ export const getUserBooks = async (userId: number) => {
   return userBooks
 };
 
-export const getUserBook = async (userId: number, bookId: string) => {
+export const getUserBook = async (bookId: string) => {
+  const userId = (await getCurrentUser()).id;
+
   const userBook = await prisma.userBook.findUnique({
     where: {
       userId_bookId: {
@@ -35,7 +38,6 @@ export const addBookToUser = async (
   rating: number
 ) => {
   const { id: bookId, title, authors, thumbnail } = bookData;
-  console.log(bookData)
   const userId = (await getCurrentUser()).id;
 
   // Create entry for book if no user has added this book before
@@ -56,6 +58,7 @@ export const addBookToUser = async (
     },
   });
 
+  revalidatePath('/')
   return userBook;
 };
 
