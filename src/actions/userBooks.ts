@@ -7,24 +7,60 @@ import { revalidatePath } from "next/cache";
 import { statusOptions } from "@/lib/constants";
 
 // Get books in user's library with given status. If status is not specified, get all books in user's library.
-export const getUserBooks = async (userId: number, status?: string | string[]) => {
-  if (status && typeof status !== 'string') {
-    status = undefined
+export const getUserBooks = async (
+  userId: number,
+  status?: string | string[],
+  sortOrder?: string | string[]
+) => {
+  if (status && typeof status !== "string") {
+    status = undefined;
   }
-  if (status && !(statusOptions.includes(status))) { // if invalid status is provided, set status param to undefined, i.e. get all user books
-    status = undefined
+  if (status && !statusOptions.includes(status)) {
+    // if invalid status is provided, set status param to undefined, i.e. get all user books
+    status = undefined;
   }
+
+  type SortOrder =
+    | { book: { title: "asc" } }
+    | { book: { authors: "asc" } }
+    | { rating: "desc" }
+    | { dateAdded: "desc" };
+
+  const getSortOrder = (): SortOrder => {
+    let orderBy: SortOrder;
+
+    switch (sortOrder) {
+      case "title":
+        orderBy = { book: { title: "asc" } };
+        break;
+      case "author":
+        orderBy = { book: { authors: "asc" } };
+        break;
+      case "rating":
+        orderBy = { rating: "desc" };
+        break;
+      case "new":
+        orderBy = { dateAdded: "desc" };
+        break;
+      default:
+        orderBy = { dateAdded: "desc" };
+    }
+
+    return orderBy;
+  };
 
   const userBooks = await prisma.userBook.findMany({
     where: {
       userId,
-      status
+      status,
     },
     include: {
       book: true,
     },
+    orderBy: getSortOrder(),
   });
-  return userBooks
+
+  return userBooks;
 };
 
 export const getUserBook = async (bookId: string) => {
@@ -33,12 +69,13 @@ export const getUserBook = async (bookId: string) => {
   const userBook = await prisma.userBook.findUnique({
     where: {
       userId_bookId: {
-        userId, bookId
-      }
-    }
-  })
-  return userBook
-}
+        userId,
+        bookId,
+      },
+    },
+  });
+  return userBook;
+};
 
 // Add book to user's library. A user can only have 1 entry of each book in their library
 export const addBookToUser = async (
@@ -47,8 +84,8 @@ export const addBookToUser = async (
   rating: number | null
 ) => {
   // If status is not "completed", rating must be undefined
-  if (status !== 'completed' && rating) {
-    throw new Error("Only books with 'completed' status can have a rating")
+  if (status !== "completed" && rating) {
+    throw new Error("Only books with 'completed' status can have a rating");
   }
 
   const { id: bookId, title, authors, thumbnail } = bookData;
@@ -72,7 +109,7 @@ export const addBookToUser = async (
     },
   });
 
-  revalidatePath('/')
+  revalidatePath("/");
   return userBook;
 };
 
@@ -113,7 +150,10 @@ export const updateBookStatus = async (bookId: string, status: ReadStatus) => {
   return userBook;
 };
 
-export const updateBookRating = async (bookId: string, rating: number | null) => {
+export const updateBookRating = async (
+  bookId: string,
+  rating: number | null
+) => {
   const userId = (await getCurrentUser()).id;
 
   const userBook = await prisma.userBook.update({

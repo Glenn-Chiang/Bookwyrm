@@ -23,7 +23,7 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
   };
 
   return (
-    <article className="flex gap-4 p-4">
+    <article className="flex gap-4 p-4 ">
       {thumbnail && (
         <Link href={`/book/${bookId}`} className="w-1/3">
           <Image
@@ -36,7 +36,7 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
         </Link>
       )}
       <div className="flex flex-col gap-4">
-        <div>
+        <div className="flex flex-col gap-2">
           <Link href={`/book/${bookId}`} className="hover:text-sky-500">
             <h2>{title}</h2>
           </Link>
