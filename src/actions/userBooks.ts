@@ -31,12 +31,17 @@ export const getUserBook = async (bookId: string) => {
   return userBook
 }
 
-// Add book to user's library. A user can only have 1 entry of each book in their library.
+// Add book to user's library. A user can only have 1 entry of each book in their library
 export const addBookToUser = async (
   bookData: BookData,
   status: ReadStatus,
-  rating: number
+  rating?: number 
 ) => {
+  // If status is not "completed", rating must be undefined
+  if (status !== 'completed' && rating) {
+    throw new Error("Only books with 'completed' status can have a rating")
+  }
+
   const { id: bookId, title, authors, thumbnail } = bookData;
   const userId = (await getCurrentUser()).id;
 

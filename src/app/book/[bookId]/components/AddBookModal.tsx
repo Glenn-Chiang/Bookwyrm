@@ -15,15 +15,16 @@ type AddBookModalProps = {
 
 export const AddBookModal = ({ bookData, close }: AddBookModalProps) => {
   const [isPending, setIsPending] = useState(false);
-  const [status, setStatus] = useState<ReadStatus>("completed");
-  const [rating, setRating] = useState(10);
+  const [selectedStatus, setSelectedStatus] = useState<ReadStatus>("completed");
+  const [selectedRating, setSelectedRating] = useState(10);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault()
     setIsPending(true);
-    const userBook = await addBookToUser(bookData, status, rating);
-    setIsPending(false);
+    const rating = selectedStatus === 'completed' ? selectedRating : undefined
+    const userBook = await addBookToUser(bookData, selectedStatus, rating);
     close()
+    setIsPending(false);
     console.log('Book', userBook.bookId, 'added')
   };
 
@@ -35,13 +36,13 @@ export const AddBookModal = ({ bookData, close }: AddBookModalProps) => {
           to your Library
         </h2>
         <StatusDropdown
-          defaultValue={status}
-          handleChange={(status: ReadStatus) => setStatus(status)}
+          defaultValue={selectedStatus}
+          handleChange={(status: ReadStatus) => setSelectedStatus(status)}
         />
-        {status === "completed" && (
+        {selectedStatus === "completed" && (
           <RatingDropdown
-            defaultValue={rating}
-            handleChange={(rating) => setRating(rating)}
+            defaultValue={selectedRating}
+            handleChange={(rating) => setSelectedRating(rating)}
           />
         )}
         <div className="flex gap-2">
