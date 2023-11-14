@@ -25,7 +25,7 @@ export const SortDropdown = () => {
         Sort by
       </label>
       <select
-        value={searchParams.get('sort') || 'recent'}
+        defaultValue={searchParams.get('sort') || 'recent'}
         id="sort"
         className="p-2 rounded-md capitalize bg-slate-100"
         onChange={handleChange}

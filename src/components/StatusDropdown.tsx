@@ -1,9 +1,8 @@
 "use client";
 
 import { ReadStatus } from "@/lib/types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
-import { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type StatusDropdownProps = {
   defaultValue: ReadStatus;
@@ -44,7 +43,7 @@ export const StatusDropdown = ({
       <select
         id="status"
         className={`p-2 rounded-md capitalize bg-slate-100 ${style}`}
-        value={defaultValue}
+        defaultValue={defaultValue}
         onChange={onChange}
       >
         {statusOptions.map((status, index) => (

@@ -23,7 +23,7 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
   };
 
   return (
-    <article className="flex gap-4 p-4 ">
+    <article key={userBook.bookId} className="flex gap-4 p-4 ">
       {thumbnail && (
         <Link href={`/book/${bookId}`} className="w-1/3">
           <Image
