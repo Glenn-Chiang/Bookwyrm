@@ -25,7 +25,7 @@ export const getUserBooks = async (
     | { book: { authors: "asc" } }
     | { rating: {sort : "desc", nulls: "last"} }
     | { dateAdded: "desc" }
-    | { status: "asc" };
+    | { status: "desc" };
 
   const getSortOrder = (): SortOrder => {
     let orderBy: SortOrder;
@@ -41,7 +41,8 @@ export const getUserBooks = async (
         orderBy = { rating: { sort: "desc", nulls: "last" } };
         break;
       case "status":
-        orderBy = { status: "asc" };
+        orderBy = { status: "desc" };
+        break
       case "recent":
         orderBy = { dateAdded: "desc" };
         break;
@@ -62,7 +63,7 @@ export const getUserBooks = async (
     },
     orderBy: getSortOrder(),
   });
-
+  
   return userBooks;
 };
 
