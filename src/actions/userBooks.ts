@@ -23,7 +23,7 @@ export const getUserBooks = async (
   type SortOrder =
     | { book: { title: "asc" } }
     | { book: { authors: "asc" } }
-    | { rating: "desc" }
+    | { rating: {sort : "desc", nulls: "last"} }
     | { dateAdded: "desc" }
     | { status: "asc" };
 
@@ -38,7 +38,7 @@ export const getUserBooks = async (
         orderBy = { book: { authors: "asc" } };
         break;
       case "rating":
-        orderBy = { rating: "desc" };
+        orderBy = { rating: { sort: "desc", nulls: "last" } };
         break;
       case "status":
         orderBy = { status: "asc" };
@@ -146,6 +146,7 @@ export const updateBookStatus = async (bookId: string, status: ReadStatus) => {
     },
     data: {
       status,
+      rating: status === 'completed' ? undefined : null // If status is changed to reading or plan-to-read, set rating to null
     },
   });
 
