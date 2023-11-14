@@ -26,7 +26,7 @@ export default async function Library({
 
   return (
     <main className="flex flex-col gap-2 items-center w-full pt-8">
-      <h1 className="text-center">Library</h1>
+      <h1 className="text-center pt-4">Library</h1>
       <Link
         href={`/library/${userId}/shelves`}
         className="text-sky-500 hover:text-sky-400 font-medium"

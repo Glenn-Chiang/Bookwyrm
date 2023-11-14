@@ -42,7 +42,7 @@ export const AddToShelvesModal = ({
 
   return (
     <Modal>
-      <form className="flex flex-col gap-4 "> 
+      <form className="flex flex-col gap-4 h-full max-h-[50vh]"> 
         <h2>
           Your shelves for{" "}
           <span className="text-sky-500 font-medium">{userBook.book.title}</span>
@@ -50,7 +50,7 @@ export const AddToShelvesModal = ({
         <p className="text-slate-500 ">
           Tip: Click on a shelf to select or unselect it
         </p>
-        <ul className="flex flex-col gap-2 overflow-y-scroll">
+        <ul className="flex flex-col gap-2 overflow-y-auto">
           {shelves.map((shelf) => (
             <ShelfItem
               key={shelf.shelfname}

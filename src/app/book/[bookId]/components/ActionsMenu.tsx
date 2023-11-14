@@ -53,7 +53,6 @@ export const ActionsMenu = ({
           {shelvesModalIsOpen && (
             <AddToShelvesModal
               userBook={userBook}
-              book={bookData}
               shelves={shelves}
               close={() => setShelvesModalIsOpen(false)}
             />
