@@ -1,6 +1,7 @@
 "use client";
 
 import { statusOptions } from "@/lib/constants";
+import { createQueryString } from "@/lib/helpers/createQueryString";
 import {
   IconDefinition,
   faBookOpen,
@@ -37,11 +38,11 @@ export const FilterMenu = () => {
   ];
 
   return (
-    <section className="w-full p-4 capitalize flex gap-2 overflow-x-scroll sm:overflow-auto justify-between sm:justify-center items-center">
+    <nav className="w-full p-4 capitalize flex gap-2 overflow-x-scroll sm:overflow-auto justify-between sm:justify-center items-center">
       {filterLabels.map((filter, index) => (
         <FilterTab key={index} filterLabel={filter} />
       ))}
-    </section>
+    </nav>
   );
 };
 
@@ -57,11 +58,11 @@ const FilterTab = ({ filterLabel }: FilterTabProps) => {
   // if no filter is specified in query param, show 'all' as selected by default
   const isActive = currentFilter
     ? currentFilter === filterLabel.text
-    : filterLabel.text === "all";
+    : filterLabel.text === "all";  
 
   return (
     <Link
-      href={`?status=${filterLabel.text}`}
+      href={'?' + createQueryString(searchParams, 'status', filterLabel.text)}
       className={`min-w-max rounded-full p-2 flex gap-2 items-center ${
         isActive && "bg-sky-100 text-sky-500" 
       }`}

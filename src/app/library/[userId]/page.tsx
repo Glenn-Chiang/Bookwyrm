@@ -2,6 +2,7 @@ import { getUserBooks } from "@/actions/userBooks";
 import { BookEntry } from "./components/BookEntry";
 import { FilterMenu } from "./components/FilterMenu";
 import { ReadStatus } from "@/lib/types";
+import { SortDropdown } from "./components/SortDropdown";
 
 export default async function Library({
   params,
@@ -20,7 +21,10 @@ export default async function Library({
     <>
       <h1 className="text-center pt-4">Library</h1>
       <FilterMenu />
-      <p className="text-slate-500 text-center">Showing {books.length} book{books.length !== 1 ? 's' : ''}</p>
+      <p className="text-slate-500 text-center p-2">
+        Showing {books.length} book{books.length !== 1 ? "s" : ""}
+      </p>
+      <SortDropdown />
       {books.length ? (
         <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {books.map((book) => (

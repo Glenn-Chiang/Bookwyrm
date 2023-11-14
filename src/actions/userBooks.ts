@@ -24,7 +24,8 @@ export const getUserBooks = async (
     | { book: { title: "asc" } }
     | { book: { authors: "asc" } }
     | { rating: "desc" }
-    | { dateAdded: "desc" };
+    | { dateAdded: "desc" }
+    | { status: "asc" };
 
   const getSortOrder = (): SortOrder => {
     let orderBy: SortOrder;
@@ -39,7 +40,9 @@ export const getUserBooks = async (
       case "rating":
         orderBy = { rating: "desc" };
         break;
-      case "new":
+      case "status":
+        orderBy = { status: "asc" };
+      case "recent":
         orderBy = { dateAdded: "desc" };
         break;
       default:
