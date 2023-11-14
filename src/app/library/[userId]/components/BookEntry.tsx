@@ -1,20 +1,23 @@
-"use client"
+"use client";
 
 import { updateBookRating, updateBookStatus } from "@/actions/userBooks";
+import { AddToShelvesModal } from "@/components/AddToShelvesModal";
 import { RatingDropdown } from "@/components/RatingDropdown";
 import { RemoveBookModal } from "@/components/RemoveBookModal";
 import { StatusDropdown } from "@/components/StatusDropdown";
 import { ActionButton } from "@/components/buttons";
 import { ReadStatus, UserBookDetail } from "@/lib/types";
+import { Shelf } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 type BookEntryProps = {
   userBook: UserBookDetail;
+  shelves: Shelf[]
 };
 
-export const BookEntry = ({ userBook }: BookEntryProps) => {
+export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   const { id: bookId, thumbnail, title, authors } = userBook.book;
 
   const handleStatusChange = async (status: ReadStatus) => {
@@ -25,8 +28,9 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
     await updateBookRating(bookId, rating);
   };
 
-  const [menuIsOpen, setMenuIsOpen] = useState(false)
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [removeModalIsOpen, setRemoveModalIsOpen] = useState(false);
+  const [shelvesModalIsOpen, setShelvesModalIsOpen] = useState(false);
 
   return (
     <article key={userBook.bookId} className="flex gap-4 p-4 ">
@@ -60,24 +64,50 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
             />
           )}
         </div>
-        <ActionButton onClick={() => setMenuIsOpen(prev => !prev)}/>
-        {menuIsOpen && <ActionMenu handleClickRemove={() => setModalIsOpen(true)}/>}
-        {modalIsOpen && <RemoveBookModal bookId={bookId} close={() => setModalIsOpen(false)}/>}
+        <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
+        {menuIsOpen && (
+          <ActionMenu
+            handleClickShelves={() => setShelvesModalIsOpen(true)}
+            handleClickRemove={() => setRemoveModalIsOpen(true)}
+          />
+        )}
+        {shelvesModalIsOpen && (
+          <AddToShelvesModal userBook={userBook} shelves={shelves} close={() => setShelvesModalIsOpen(false)}/>
+        )}
+        {removeModalIsOpen && (
+          <RemoveBookModal
+            bookId={bookId}
+            close={() => setRemoveModalIsOpen(false)}
+          />
+        )}
       </div>
     </article>
   );
 };
 
 type ActionMenuProps = {
-  handleClickRemove: () => void
-}
+  handleClickShelves: () => void;
+  handleClickRemove: () => void;
+};
 // TODO: Close menu when user clicks away from it
-const ActionMenu = ({handleClickRemove}: ActionMenuProps) => {
+const ActionMenu = ({
+  handleClickShelves,
+  handleClickRemove,
+}: ActionMenuProps) => {
   return (
     <menu className="z-10 shadow bg-slate-100 absolute bottom-0 right-12 rounded">
-      <li onClick={handleClickRemove} className="rounded-t p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-600">
-        Remove from Library
+      <li
+        onClick={handleClickShelves}
+        className="rounded-t p-2 w-max text-slate-500 hover:bg-slate-200 hover:text-slate-600"
+      >
+        Manage shelves
+      </li>
+      <li
+        onClick={handleClickRemove}
+        className="rounded-b p-2 w-max text-slate-500 hover:bg-slate-200 hover:text-slate-600"
+      >
+        Remove from library
       </li>
     </menu>
-  )
-}
+  );
+};

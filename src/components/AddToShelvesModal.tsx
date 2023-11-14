@@ -1,22 +1,20 @@
 "use client";
 
-import { Book, Shelf, ShelfBook, UserBook } from "@prisma/client";
-import { Modal } from "./Modal";
-import { BookData, UserBookDetail } from "@/lib/types";
-import { CancelButton, SubmitButton } from "./buttons";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UserBookDetail } from "@/lib/types";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Shelf } from "@prisma/client";
+import { useState } from "react";
+import { Modal } from "./Modal";
+import { CancelButton, SubmitButton } from "./buttons";
 
 type AddBookToShelvesModalProps = {
-  book: BookData;
   userBook: UserBookDetail;
   close: () => void;
   shelves: Shelf[];
 };
 
 export const AddToShelvesModal = ({
-  book,
   userBook,
   shelves,
   close,
@@ -40,12 +38,14 @@ export const AddToShelvesModal = ({
     }
   };
 
+  // TODO: Handle overflow of shelf items
+
   return (
     <Modal>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4 "> 
         <h2>
           Your shelves for{" "}
-          <span className="text-sky-500 font-medium">{book.title}</span>
+          <span className="text-sky-500 font-medium">{userBook.book.title}</span>
         </h2>
         <p className="text-slate-500 ">
           Tip: Click on a shelf to select or unselect it

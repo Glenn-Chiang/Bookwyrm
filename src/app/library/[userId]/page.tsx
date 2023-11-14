@@ -3,6 +3,8 @@ import { BookEntry } from "./components/BookEntry";
 import { FilterMenu } from "./components/FilterMenu";
 import { SortDropdown } from "./components/SortDropdown";
 import Link from "next/link";
+import { getShelves } from "@/actions/shelves";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function Library({
   params,
@@ -18,6 +20,9 @@ export default async function Library({
     searchParams.status === "all" ? undefined : searchParams.status;
 
   const books = await getUserBooks(userId, statusFilter, sortParam);
+
+  const currentUser = await getCurrentUser()
+  const shelves = await getShelves(currentUser.id)
 
   return (
     <main className="flex flex-col gap-2 items-center w-full pt-8">
@@ -36,7 +41,7 @@ export default async function Library({
       {books.length ? (
         <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {books.map((book) => (
-            <BookEntry key={book.bookId} userBook={book} />
+            <BookEntry key={book.bookId} userBook={book} shelves={shelves}/>
           ))}
         </ul>
       ) : (
