@@ -2,23 +2,13 @@
 
 import prisma from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 export const getShelves = async (userId: number) => {
   const shelves = await prisma.shelf.findMany({
     where: {
       creatorId: userId
     },
-    include: {
-      books: {
-        include: {
-          book: {
-            include: {
-              book: true
-            }
-          }
-        }
-      }
-    }
   })
   return shelves
 }
@@ -33,6 +23,7 @@ export const createShelf = async (shelfname: string) => {
     },
   });
 
+  revalidatePath('/')
   return shelf;
 };
 
@@ -48,6 +39,7 @@ export const deleteShelf = async (shelfname: string) => {
     },
   });
 
+  revalidatePath("/");
   return shelf;
 };
 
@@ -66,5 +58,6 @@ export const renameShelf = async (shelfname: string) => {
     },
   });
 
+  revalidatePath("/");
   return shelf
 };

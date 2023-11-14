@@ -8,20 +8,20 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  username  String      @unique
-  shelves   Shelf[]
-  books     UserBook[] // all books added by user 
+  id         Int         @id @default(autoincrement())
+  username   String      @unique
+  shelves    Shelf[]
+  books      UserBook[] // all books added by user 
   shelfBooks ShelfBook[] // books added by user to specific shelves
 }
 
 // UserBook contains metadata unique to relationship between this user and this book
 model UserBook {
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bookId String
-  book Book @relation(fields: [bookId], references: [id])
-  shelves   ShelfBook[]
+  userId  Int
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId  String
+  book    Book        @relation(fields: [bookId], references: [id])
+  shelves ShelfBook[]
 
   dateAdded DateTime @default(now())
   updatedAt DateTime @updatedAt()
@@ -32,7 +32,7 @@ model UserBook {
 }
 
 model Book {
-  id String @id
+  id        String   @id
   title     String
   thumbnail String? // url to cover img
   authors   String[]
@@ -44,7 +44,7 @@ model ShelfBook {
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   bookId    String
-  book      UserBook @relation(fields: [userId, bookId], references: [userId, bookId], onDelete: Cascade)
+  userBook  UserBook @relation(fields: [userId, bookId], references: [userId, bookId], onDelete: Cascade)
   shelfname String
   shelf     Shelf    @relation(fields: [userId, shelfname], references: [creatorId, shelfname], onDelete: Cascade)
   dateAdded DateTime @default(now()) // Date when this book was added to this shelf
@@ -53,10 +53,11 @@ model ShelfBook {
 }
 
 model Shelf {
-  shelfname String      
-  createdAt DateTime    @default(now())
-  creatorId Int
-  creator   User        @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-  books     ShelfBook[]
+  shelfname  String
+  createdAt  DateTime    @default(now())
+  creatorId  Int
+  creator    User        @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  shelfBooks ShelfBook[]
+
   @@id([creatorId, shelfname])
 }

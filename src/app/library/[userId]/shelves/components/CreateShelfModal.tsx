@@ -28,7 +28,8 @@ export const CreateShelfModal = ({ close }: CreateShelfModalProps) => {
   const onSubmit: SubmitHandler<CreateShelfFormFields> = async (formFields) => {
     try {
       setIsPending(true);
-      await createShelf(formFields.shelfname);
+      const shelf = await createShelf(formFields.shelfname);
+      console.log('Shelf created:', shelf.shelfname)
       close();
     } catch (error) {
       setError((error as Error).message);

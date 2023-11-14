@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { getCurrentUser } from "@/lib/auth";
 
 export const getShelfBooks = async (userId: number, shelfname: string) => {
   const shelfBooks = await prisma.shelfBook.findMany({
@@ -8,7 +9,7 @@ export const getShelfBooks = async (userId: number, shelfname: string) => {
       userId, shelfname
     },
     include: {
-      book: {
+      userBook: {
         include: {
           book: true
         }

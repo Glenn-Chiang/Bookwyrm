@@ -16,17 +16,20 @@ export default async function Shelves({
   const shelves = await getShelves(userId);
 
   return (
-    <main className="flex flex-col items-center gap-4 w-full pt-8">
-      <h1>Shelves</h1>
-      <CreateShelfButton/>
+    <main className="flex flex-col  gap-4 w-full pt-8">
+      <h1 className="text-center">Shelves</h1>
+      <CreateShelfButton />
+
       {shelves.length ? (
-        shelves.map((shelf) => (
-          <ShelfPreview
-            key={shelf.shelfname}
-            shelfname={shelf.shelfname}
-            userId={userId}
-          />
-        ))
+        <ul>
+          {shelves.map((shelf) => (
+            <ShelfPreview
+              key={shelf.shelfname}
+              shelfname={shelf.shelfname}
+              userId={userId}
+            />
+          ))}
+        </ul>
       ) : (
         <p className="text-slate-500">
           {IsOwnPage ? "You haven't" : "This user hasn't"} created any shelves
