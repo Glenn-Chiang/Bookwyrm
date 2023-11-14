@@ -95,19 +95,19 @@ const ActionMenu = ({
   handleClickRemove,
 }: ActionMenuProps) => {
   return (
-    <menu className="z-10 shadow bg-slate-100 absolute bottom-0 right-12 rounded">
-      <li
+    <menu className="z-10 bg-slate-100 absolute bottom-0 right-12 rounded">
+      <button
         onClick={handleClickShelves}
-        className="rounded-t p-2 w-max text-slate-500 hover:bg-slate-200 hover:text-slate-600"
+        className="w-full rounded-t rounded-b-none p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600"
       >
         Manage shelves
-      </li>
-      <li
+      </button>
+      <button
         onClick={handleClickRemove}
-        className="rounded-b p-2 w-max text-slate-500 hover:bg-slate-200 hover:text-slate-600"
+        className="w-full rounded-b rounded-t-none p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600"
       >
         Remove from library
-      </li>
+      </button>
     </menu>
   );
 };
