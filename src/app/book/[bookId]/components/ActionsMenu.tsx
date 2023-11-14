@@ -3,7 +3,7 @@
 import { updateBookRating, updateBookStatus } from "@/actions/userBooks";
 import { RatingDropdown } from "@/components/RatingDropdown";
 import { StatusDropdown } from "@/components/StatusDropdown";
-import { BookData, ReadStatus } from "@/lib/types";
+import { BookData, ReadStatus, UserBookDetail } from "@/lib/types";
 import { Shelf, UserBook } from "@prisma/client";
 import { ShelvesButton } from "./ShelvesButton";
 import { AddBookButton } from "./AddBookButton";
@@ -13,11 +13,15 @@ import { AddToShelvesModal } from "@/components/AddToShelvesModal";
 
 type ActionsMenuProps = {
   bookData: BookData;
-  userBook: UserBook | null;
+  userBook: UserBookDetail | null;
   shelves: Shelf[];
 };
 
-export const ActionsMenu = ({ userBook, bookData, shelves }: ActionsMenuProps) => {
+export const ActionsMenu = ({
+  userBook,
+  bookData,
+  shelves,
+}: ActionsMenuProps) => {
   const handleStatusChange = async (status: ReadStatus) => {
     await updateBookStatus(bookData.id, status);
   };
@@ -48,10 +52,10 @@ export const ActionsMenu = ({ userBook, bookData, shelves }: ActionsMenuProps) =
           <ShelvesButton onClick={() => setShelvesModalIsOpen(true)} />
           {shelvesModalIsOpen && (
             <AddToShelvesModal
+              userBook={userBook}
               book={bookData}
               shelves={shelves}
               close={() => setShelvesModalIsOpen(false)}
-
             />
           )}
           {/* <span className="text-slate-500">Added on {userBook.dateAdded.toLocaleDateString()}</span>

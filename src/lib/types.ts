@@ -11,8 +11,9 @@ export type BookData = {
 
 const userBookDetail = Prisma.validator<Prisma.UserBookDefaultArgs>()({
   include: {
-    book: true
-  }
-})
+    book: true,
+    shelves: true,
+  },
+});
 
-export type UserBookDetail = Prisma.UserBookGetPayload<typeof userBookDetail>
+export type UserBookDetail = Prisma.UserBookGetPayload<typeof userBookDetail>;

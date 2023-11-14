@@ -60,6 +60,7 @@ export const getUserBooks = async (
     },
     include: {
       book: true,
+      shelves: true
     },
     orderBy: getSortOrder(),
   });
@@ -77,6 +78,10 @@ export const getUserBook = async (bookId: string) => {
         bookId,
       },
     },
+    include: {
+      book: true,
+      shelves: true
+    }
   });
   return userBook;
 };
