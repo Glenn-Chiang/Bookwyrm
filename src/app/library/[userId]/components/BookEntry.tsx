@@ -71,7 +71,7 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
 type ActionMenuProps = {
   handleClickRemove: () => void
 }
-
+// TODO: Close menu when user clicks away from it
 const ActionMenu = ({handleClickRemove}: ActionMenuProps) => {
   return (
     <menu className="z-10 shadow bg-slate-100 absolute bottom-0 right-12 rounded">

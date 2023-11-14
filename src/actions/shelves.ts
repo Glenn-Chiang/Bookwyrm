@@ -1,6 +1,27 @@
 "use server";
 
 import prisma from "@/lib/db";
+import { getCurrentUser } from "@/lib/auth";
+
+export const getShelves = async (userId: number) => {
+  const shelves = await prisma.shelf.findMany({
+    where: {
+      creatorId: userId
+    },
+    include: {
+      books: {
+        include: {
+          book: {
+            include: {
+              book: true
+            }
+          }
+        }
+      }
+    }
+  })
+  return shelves
+}
 
 export const createShelf = async (shelfname: string) => {
   const userId = (await getCurrentUser()).id;

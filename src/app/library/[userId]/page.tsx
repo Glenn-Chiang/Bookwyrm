@@ -2,6 +2,7 @@ import { getUserBooks } from "@/actions/userBooks";
 import { BookEntry } from "./components/BookEntry";
 import { FilterMenu } from "./components/FilterMenu";
 import { SortDropdown } from "./components/SortDropdown";
+import Link from "next/link";
 
 export default async function Library({
   params,
@@ -12,17 +13,23 @@ export default async function Library({
 }) {
   const userId = Number(params.userId);
 
-  const sortParam = searchParams.sort
+  const sortParam = searchParams.sort;
   const statusFilter =
     searchParams.status === "all" ? undefined : searchParams.status;
-  
-    const books = await getUserBooks(userId, statusFilter, sortParam);
+
+  const books = await getUserBooks(userId, statusFilter, sortParam);
 
   return (
-    <>
-      <h1 className="text-center pt-4">Library</h1>
+    <main className="flex flex-col gap-2 items-center w-full pt-8">
+      <h1 className="text-center">Library</h1>
+      <Link
+        href={`/library/${userId}/shelves`}
+        className="text-sky-500 hover:text-sky-400 font-medium"
+      >
+        Browse shelves
+      </Link>
       <FilterMenu />
-      <p className="text-slate-500 text-center p-2">
+      <p className="text-slate-500 text-center">
         Showing {books.length} book{books.length !== 1 ? "s" : ""}
       </p>
       <SortDropdown />
@@ -35,6 +42,6 @@ export default async function Library({
       ) : (
         <p className="text-slate-500 text-center">No books to display</p>
       )}
-    </>
+    </main>
   );
 }
