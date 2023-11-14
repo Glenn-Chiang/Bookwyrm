@@ -7,11 +7,18 @@ import { revalidatePath } from "next/cache";
 export const getShelves = async (userId: number) => {
   const shelves = await prisma.shelf.findMany({
     where: {
-      creatorId: userId
+      creatorId: userId,
     },
-  })
-  return shelves
-}
+    include: {
+      _count: {
+        select: {
+          shelfBooks: true,
+        },
+      },
+    },
+  });
+  return shelves;
+};
 
 export const createShelf = async (shelfname: string) => {
   const userId = (await getCurrentUser()).id;
@@ -23,7 +30,7 @@ export const createShelf = async (shelfname: string) => {
     },
   });
 
-  revalidatePath('/')
+  revalidatePath("/");
   return shelf;
 };
 
@@ -59,5 +66,5 @@ export const renameShelf = async (shelfname: string) => {
   });
 
   revalidatePath("/");
-  return shelf
+  return shelf;
 };

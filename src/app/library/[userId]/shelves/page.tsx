@@ -19,14 +19,12 @@ export default async function Shelves({
     <main className="flex flex-col  gap-4 w-full pt-8">
       <h1 className="text-center">Shelves</h1>
       <CreateShelfButton />
-
       {shelves.length ? (
-        <ul>
+        <ul className="flex flex-col gap-4">
           {shelves.map((shelf) => (
             <ShelfPreview
               key={shelf.shelfname}
-              shelfname={shelf.shelfname}
-              userId={userId}
+              shelf={shelf}
             />
           ))}
         </ul>

@@ -1,16 +1,11 @@
-import {
-  getUserBook,
-  updateBookRating,
-  updateBookStatus,
-} from "@/actions/userBooks";
-import { RatingDropdown } from "@/components/RatingDropdown";
-import { StatusDropdown } from "@/components/StatusDropdown";
+import { getUserBook } from "@/actions/userBooks";
 import { VolumeInfo } from "@/lib/books-api/types";
 import { stripTags } from "@/lib/helpers/stripTags";
-import { BookData, ReadStatus } from "@/lib/types";
+import { BookData } from "@/lib/types";
 import Image from "next/image";
-import { AddBookButton } from "./components/AddBookButton";
-import { RemoveBookButton } from "./components/RemoveBookButton";
+import { ActionsMenu } from "./components/ActionsMenu";
+import { getShelves } from "@/actions/shelves";
+import { getCurrentUser } from '../../../lib/auth';
 
 const getVolumeInfo = async (bookId: string) => {
   const res = await fetch(
@@ -38,15 +33,8 @@ export default async function BookPage({
     thumbnail: imageLinks?.large || imageLinks?.thumbnail,
   };
 
-  const handleStatusChange = async (status: ReadStatus) => {
-    "use server";
-    await updateBookStatus(bookId, status);
-  };
-
-  const handleRatingChange = async (rating: number | null) => {
-    "use server";
-    await updateBookRating(bookId, rating);
-  };
+  const currentUser = await getCurrentUser()
+  const shelves = await getShelves(currentUser.id)
 
   return (
     <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start">
@@ -60,26 +48,7 @@ export default async function BookPage({
             className="rounded "
           />
         )}
-        {!userBook && <AddBookButton bookData={bookData} />}
-        {userBook && (
-          <StatusDropdown
-            defaultValue={userBook.status as ReadStatus}
-            handleChange={handleStatusChange}
-          />
-        )}
-        {userBook && userBook.status === "completed" && (
-          <RatingDropdown
-            defaultValue={userBook.rating}
-            handleChange={handleRatingChange}
-          />
-        )}
-        {userBook && (
-          <>
-            <span className="text-slate-500">Added on {userBook.dateAdded.toLocaleDateString()}</span>
-            <span className="text-slate-500">Last updated {userBook.updatedAt.toLocaleDateString()}</span>
-            <RemoveBookButton bookId={bookId} />
-          </>
-        )}
+        <ActionsMenu userBook={userBook} bookData={bookData} shelves={shelves}/>
       </section>
       <InfoSection volumeInfo={volumeInfo} />
     </main>
@@ -105,7 +74,9 @@ const InfoSection = ({ volumeInfo }: { volumeInfo: VolumeInfo }) => {
         {publishedDate && <span>({publishedDate})</span>}
       </div>
 
-      {categories && <div className="text-slate-500">{categories.join(", ")}</div>}
+      {categories && (
+        <div className="text-slate-500">{categories.join(", ")}</div>
+      )}
 
       <div className="text-slate-500">{pageCount} pages</div>
 

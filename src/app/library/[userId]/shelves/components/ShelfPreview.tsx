@@ -1,21 +1,13 @@
 import { getShelfBooks } from "@/actions/shelfBooks";
-import { Book } from "@prisma/client";
+import { Book, Shelf } from "@prisma/client";
 import Image from "next/image";
 
-type ShelfPreviewProps = {
-  userId: number;
-  shelfname: string;
-};
-
-export const ShelfPreview = async ({
-  userId,
-  shelfname,
-}: ShelfPreviewProps) => {
-  const shelfBooks = await getShelfBooks(userId, shelfname);
+export const ShelfPreview = async ({shelf}: {shelf: Shelf}) => {
+  const shelfBooks = await getShelfBooks(shelf.creatorId, shelf.shelfname);
 
   return (
-    <section className="w-full flex flex-col gap-4 ">
-      <h2>{shelfname}</h2>
+    <section className="w-full flex flex-col gap-2">
+      <h2>{shelf.shelfname}</h2>
       {shelfBooks.length ? (
         <ul className="bg-slate-100 flex justify-center">
           {shelfBooks.map((shelfBook) => (
