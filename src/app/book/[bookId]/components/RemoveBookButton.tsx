@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RemoveBookModal } from "./RemoveBookModal";
+import { RemoveBookModal } from "../../../../components/RemoveBookModal";
 
 type RemoveBookButtonProps = {
   bookId: string;

@@ -1,9 +1,14 @@
+"use client"
+
 import { updateBookRating, updateBookStatus } from "@/actions/userBooks";
 import { RatingDropdown } from "@/components/RatingDropdown";
+import { RemoveBookModal } from "@/components/RemoveBookModal";
 import { StatusDropdown } from "@/components/StatusDropdown";
+import { ActionButton } from "@/components/buttons";
 import { ReadStatus, UserBookDetail } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 type BookEntryProps = {
   userBook: UserBookDetail;
@@ -13,14 +18,15 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
   const { id: bookId, thumbnail, title, authors } = userBook.book;
 
   const handleStatusChange = async (status: ReadStatus) => {
-    "use server";
     await updateBookStatus(bookId, status);
   };
 
   const handleRatingChange = async (rating: number | null) => {
-    "use server";
     await updateBookRating(bookId, rating);
   };
+
+  const [menuIsOpen, setMenuIsOpen] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <article key={userBook.bookId} className="flex gap-4 p-4 ">
@@ -35,7 +41,7 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
           />
         </Link>
       )}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 relative w-2/3">
         <div className="flex flex-col gap-2">
           <Link href={`/book/${bookId}`} className="hover:text-sky-500">
             <h2>{title}</h2>
@@ -54,7 +60,24 @@ export const BookEntry = ({ userBook }: BookEntryProps) => {
             />
           )}
         </div>
+        <ActionButton onClick={() => setMenuIsOpen(prev => !prev)}/>
+        {menuIsOpen && <ActionMenu handleClickRemove={() => setModalIsOpen(true)}/>}
+        {modalIsOpen && <RemoveBookModal bookId={bookId} close={() => setModalIsOpen(false)}/>}
       </div>
     </article>
   );
 };
+
+type ActionMenuProps = {
+  handleClickRemove: () => void
+}
+
+const ActionMenu = ({handleClickRemove}: ActionMenuProps) => {
+  return (
+    <menu className="z-10 shadow bg-slate-100 absolute bottom-0 right-12 rounded">
+      <li onClick={handleClickRemove} className="rounded-t p-1 text-slate-500 hover:bg-slate-200 hover:text-slate-600">
+        Remove from Library
+      </li>
+    </menu>
+  )
+}
