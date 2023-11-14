@@ -105,7 +105,7 @@ const InfoSection = ({ volumeInfo }: { volumeInfo: VolumeInfo }) => {
         {publishedDate && <span>({publishedDate})</span>}
       </div>
 
-      <div className="text-slate-500">{categories.join(", ")}</div>
+      {categories && <div className="text-slate-500">{categories.join(", ")}</div>}
 
       <div className="text-slate-500">{pageCount} pages</div>
 

@@ -1,7 +1,6 @@
 import { getUserBooks } from "@/actions/userBooks";
 import { BookEntry } from "./components/BookEntry";
 import { FilterMenu } from "./components/FilterMenu";
-import { ReadStatus } from "@/lib/types";
 import { SortDropdown } from "./components/SortDropdown";
 
 export default async function Library({
@@ -13,9 +12,11 @@ export default async function Library({
 }) {
   const userId = Number(params.userId);
 
+  const sortParam = searchParams.sort
   const statusFilter =
     searchParams.status === "all" ? undefined : searchParams.status;
-  const books = await getUserBooks(userId, statusFilter);
+  
+    const books = await getUserBooks(userId, statusFilter, sortParam);
 
   return (
     <>

@@ -25,11 +25,11 @@ export const RatingDropdown = ({defaultValue, handleChange}: RatingDropdown) => 
       <select
         id="status"
         className="p-2 rounded-md capitalize bg-slate-100"
-        defaultValue={defaultValue || '-'}
+        value={defaultValue || '-'}
         onChange={onChange}
       >
-        {ratingOptions.map((rating, index) => (
-          <option key={index} value={rating}>
+        {ratingOptions.map(rating => (
+          <option key={rating} value={rating}>
             {rating}
           </option>
         ))}
