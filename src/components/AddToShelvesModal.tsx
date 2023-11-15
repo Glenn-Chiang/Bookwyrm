@@ -7,6 +7,7 @@ import { Shelf } from "@prisma/client";
 import { useState } from "react";
 import { Modal } from "./Modal";
 import { CancelButton, SubmitButton } from "./buttons";
+import { setBookShelves } from "@/actions/shelfBooks";
 
 type AddBookToShelvesModalProps = {
   userBook: UserBookDetail;
@@ -19,7 +20,6 @@ export const AddToShelvesModal = ({
   shelves,
   close,
 }: AddBookToShelvesModalProps) => {
-  const [isPending, setIsPending] = useState(false);
 
   const [selectedShelves, setSelectedShelves] = useState(
     userBook.shelves.map((shelfBook) => shelfBook.shelfname)
@@ -38,17 +38,24 @@ export const AddToShelvesModal = ({
     }
   };
 
-  // TODO: Handle overflow of shelf items
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsPending(true)
+    await setBookShelves(userBook.bookId, selectedShelves)
+    close()
+    console.log('Updated shelves for book:', userBook.bookId)
+  }
 
   return (
     <Modal>
-      <form className="flex flex-col gap-4 h-full max-h-[50vh] sm:max-h-[60vh]"> 
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 h-full max-h-[50vh] sm:max-h-[60vh]"> 
         <h2>
           Your shelves for{" "}
           <span className="text-sky-500 font-medium">{userBook.book.title}</span>
         </h2>
         <p className="text-slate-500 ">
-          Tip: Click on a shelf to select or unselect it
+          Added to {selectedShelves.length} shelves
         </p>
         <ul className="flex flex-col gap-2 overflow-y-auto">
           {shelves.map((shelf) => (

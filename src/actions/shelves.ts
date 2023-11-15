@@ -22,7 +22,7 @@ export const getShelves = async (userId: number) => {
 
 export const createShelf = async (shelfname: string) => {
   const userId = (await getCurrentUser()).id;
-
+  // TODO: Handle duplicate shelfnames
   const shelf = await prisma.shelf.create({
     data: {
       creatorId: userId,
