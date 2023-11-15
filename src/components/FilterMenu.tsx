@@ -39,7 +39,7 @@ export const FilterMenu = () => {
   ];
 
   return (
-    <nav className="sticky top-16 z-20 bg-white w-full p-4 capitalize flex gap-2 overflow-x-scroll sm:overflow-auto justify-between sm:justify-center items-center">
+    <nav className="sticky top-16 z-20 bg-white w-screen p-4 capitalize flex gap-2 overflow-x-scroll sm:overflow-auto justify-between sm:justify-center items-center">
       {filterLabels.map((filter, index) => (
         <FilterTab key={index} filterLabel={filter} />
       ))}

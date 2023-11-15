@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { RemoveFromShelfModal } from "./RemoveFromShelfModal";
 
 type BookEntryProps = {
   userBook: UserBookDetail;
@@ -37,8 +38,8 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
     useState(false);
 
   // Determine whether this component is rendered in a shelf or in 'All Books' page
-  const params = useParams();
-  const onShelfPage = !!params.shelf;
+  const shelfname = useParams().shelfname;
+  const onShelfPage = !!shelfname;
 
   return (
     <article
@@ -90,10 +91,17 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
             close={() => setShelvesModalIsOpen(false)}
           />
         )}
+        {removeFromShelfModalIsOpen && shelfname && (
+          <RemoveFromShelfModal
+            shelfname={shelfname as string}
+            book={userBook.book}
+            close={() => setRemoveFromShelfModalIsOpen(false)}
+          />
+        )}
         {removeFromLibraryModalIsOpen && (
           <RemoveFromLibraryModal
-            bookId={bookId}
-            close={() => setRemoveFromLibraryModalIsOpen(false)}
+          book={userBook.book}
+          close={() => setRemoveFromLibraryModalIsOpen(false)}
           />
         )}
       </div>
@@ -112,7 +120,6 @@ const ActionMenu = ({
   removeFromLibrary,
   removeFromShelf,
 }: ActionMenuProps) => {
-
   // Determine whether this component is rendered in a shelf or in 'All Books' page
   // Only show RemoveFromShelf button if user is on a ShelfPage. If user is in 'All Books' page, RemoveFromShelf button is not shown.
   const params = useParams();
@@ -129,7 +136,7 @@ const ActionMenu = ({
       {onShelfPage && (
         <button
           onClick={removeFromShelf}
-          className=" p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600 shadow-none"
+          className="rounded-none p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600 shadow-none"
         >
           Remove from shelf
         </button>
