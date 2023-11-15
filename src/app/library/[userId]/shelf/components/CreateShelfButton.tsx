@@ -10,7 +10,7 @@ export const CreateShelfButton = () => {
     <>
       <button
         onClick={() => setModalIsOpen(true)}
-        className="bg-sky-100 text-sky-500 hover:bg-sky-200 hover:text-sky-600"
+        className="bg-sky-100 text-sky-500 hover:bg-sky-200 hover:text-sky-600 sm:w-1/2 m-auto"
       >
         Create shelf
       </button>

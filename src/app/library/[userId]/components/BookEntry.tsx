@@ -35,13 +35,13 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   return (
     <article key={userBook.bookId} className="flex gap-4 p-4 sm:h-[50vh] lg:h-[40vh] shadow">
       {thumbnail && (
-        <Link href={`/book/${bookId}`} className="w-1/3">
+        <Link href={`/book/${bookId}`} className="w-1/3 h-full">
           <Image
             src={thumbnail}
             alt=""
             width={100} // this is arbitrary. we are using css to set the size
             height={100} // this is arbitrary. we are using css to set the size
-            className="rounded w-full h-auto"
+            className="rounded w-full max-h-full"
           />
         </Link>
       )}

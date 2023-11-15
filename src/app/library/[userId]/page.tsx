@@ -19,14 +19,15 @@ export default async function Library({
     <main className="flex flex-col gap-8 w-full pt-8">
       <h1 className="text-center text-3xl">Library</h1>
       <CreateShelfButton />
+      <ShelfPreview userId={userId}/>
       {shelves.length ? (
         <ul className="flex flex-col gap-10">
           {shelves.map((shelf) => (
-            <ShelfPreview key={shelf.shelfname} shelf={shelf} />
+            <ShelfPreview key={shelf.shelfname} shelfname={shelf.shelfname} userId={userId}/>
           ))}
         </ul>
       ) : (
-        <p className="text-slate-500">
+        <p className="text-slate-500 text-center">
           {IsOwnPage ? "You haven't" : "This user hasn't"} created any shelves
         </p>
       )}

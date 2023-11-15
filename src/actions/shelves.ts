@@ -48,7 +48,7 @@ export const createShelf = async (shelfname: string) => {
   const shelf = await prisma.shelf.create({
     data: {
       creatorId: userId,
-      shelfname,
+      shelfname: shelfname.toLowerCase(),
     },
   });
 

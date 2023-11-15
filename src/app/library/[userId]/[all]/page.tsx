@@ -5,6 +5,8 @@ import { SortDropdown } from "../components/SortDropdown";
 import Link from "next/link";
 import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default async function LibraryBooks({
   params,
@@ -25,21 +27,24 @@ export default async function LibraryBooks({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-2 items-center w-full pt-8">
-      <h1 className="text-center pt-4">Library</h1>
-      <Link
-        href={`/library/${userId}/shelves`}
-        className="text-sky-500 hover:text-sky-400 font-medium"
-      >
-        View shelves
-      </Link>
+    <main className="flex flex-col gap-2 items-center w-full pt-8 relative">
+      <h1 className="text-center pt-4">All Books</h1>
+      <nav className="absolute left-0 flex flex-col pt-4">
+        <Link
+          href={`/library/${userId}`}
+          className="text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+          Library
+        </Link>
+      </nav>
       <FilterMenu />
       <p className="text-slate-500 text-center">
         Showing {books.length} book{books.length !== 1 ? "s" : ""}
       </p>
       <SortDropdown />
       {books.length ? (
-        <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 ">
           {books.map((book) => (
             <BookEntry key={book.bookId} userBook={book} shelves={shelves} />
           ))}
