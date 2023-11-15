@@ -1,51 +1,34 @@
-import { getUserBooks } from "@/actions/userBooks";
-import { BookEntry } from "./components/BookEntry";
-import { FilterMenu } from "./components/FilterMenu";
-import { SortDropdown } from "./components/SortDropdown";
-import Link from "next/link";
 import { getUserShelves } from "@/actions/shelves";
+import { ShelfPreview } from "./shelf/components/ShelfPreview";
 import { getCurrentUser } from "@/lib/auth";
+import { CreateShelfButton } from './shelf/components/CreateShelfButton';
 
 export default async function Library({
   params,
-  searchParams,
 }: {
   params: { userId: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const userId = Number(params.userId);
 
-  const sortParam = searchParams.sort;
-  const statusFilter =
-    searchParams.status === "all" ? undefined : searchParams.status;
-
-  const books = await getUserBooks(userId, statusFilter, sortParam);
-
   const currentUser = await getCurrentUser();
-  const shelves = await getUserShelves(currentUser.id);
+  const IsOwnPage = currentUser.id === userId;
+
+  const shelves = await getUserShelves(userId);
 
   return (
-    <main className="flex flex-col gap-2 items-center w-full pt-8">
-      <h1 className="text-center pt-4">Library</h1>
-      <Link
-        href={`/library/${userId}/shelves`}
-        className="text-sky-500 hover:text-sky-400 font-medium"
-      >
-        View shelves
-      </Link>
-      <FilterMenu />
-      <p className="text-slate-500 text-center">
-        Showing {books.length} book{books.length !== 1 ? "s" : ""}
-      </p>
-      <SortDropdown />
-      {books.length ? (
-        <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
-          {books.map((book) => (
-            <BookEntry key={book.bookId} userBook={book} shelves={shelves} />
+    <main className="flex flex-col gap-8 w-full pt-8">
+      <h1 className="text-center text-3xl">Library</h1>
+      <CreateShelfButton />
+      {shelves.length ? (
+        <ul className="flex flex-col gap-10">
+          {shelves.map((shelf) => (
+            <ShelfPreview key={shelf.shelfname} shelf={shelf} />
           ))}
         </ul>
       ) : (
-        <p className="text-slate-500 text-center">No books to display</p>
+        <p className="text-slate-500">
+          {IsOwnPage ? "You haven't" : "This user hasn't"} created any shelves
+        </p>
       )}
     </main>
   );

@@ -33,7 +33,7 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   const [shelvesModalIsOpen, setShelvesModalIsOpen] = useState(false);
 
   return (
-    <article key={userBook.bookId} className="flex gap-4 p-4 sm:h-[50vh] shadow">
+    <article key={userBook.bookId} className="flex gap-4 p-4 sm:h-[50vh] lg:h-[40vh] shadow">
       {thumbnail && (
         <Link href={`/book/${bookId}`} className="w-1/3">
           <Image

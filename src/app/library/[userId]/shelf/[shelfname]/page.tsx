@@ -26,7 +26,7 @@ export default async function ShelfPage({
       <h1 className="text-center pt-4">{shelfname}</h1>
       <nav className="absolute left-0 flex flex-col pt-4">
         <Link
-          href={`/library/${userId}/shelves`}
+          href={`/library/${userId}`}
           className="text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
         >
           <FontAwesomeIcon icon={faChevronLeft} />

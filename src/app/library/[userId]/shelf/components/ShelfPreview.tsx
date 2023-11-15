@@ -10,11 +10,18 @@ export const ShelfPreview = async ({ shelf }: { shelf: Shelf }) => {
     <section className="w-full flex flex-col gap-2 ">
       <div className="flex gap-4 items-center ">
         <h2 className="hover:text-sky-500">
-          <Link href={`shelves/${shelf.shelfname}`}>{shelf.shelfname}</Link>
+          <Link href={`${shelf.creatorId}/shelf/${shelf.shelfname}`}>
+            {shelf.shelfname}
+          </Link>
         </h2>
         <span className="text-slate-500">{shelfBooks.length} books</span>
       </div>
-      <Link href={`shelves/${shelf.shelfname}`} className="text-sky-500 hover:text-sky-400 w-max">View shelf</Link>
+      <Link
+        href={`${shelf.creatorId}/shelf/${shelf.shelfname}`}
+        className="text-sky-500 hover:text-sky-400 w-max"
+      >
+        View shelf
+      </Link>
       {shelfBooks.length ? (
         <ul className="bg-slate-200 p-2 rounded-md flex justify-start gap-2 w-full overflow-x-scroll">
           {shelfBooks.map((shelfBook) => (
@@ -33,7 +40,7 @@ export const ShelfPreview = async ({ shelf }: { shelf: Shelf }) => {
 
 const ShelfBookPreview = ({ book }: { book: Book }) => {
   return (
-    <li className="w-1/5 flex-shrink-0">
+    <li className="w-1/5 lg:w-1/6 flex-shrink-0">
       {book.thumbnail && (
         <Image
           src={book.thumbnail}
