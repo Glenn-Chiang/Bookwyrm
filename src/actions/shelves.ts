@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
-export const getShelves = async (userId: number) => {
+export const getUserShelves = async (userId: number) => {
   const shelves = await prisma.shelf.findMany({
     where: {
       creatorId: userId,
@@ -17,10 +17,29 @@ export const getShelves = async (userId: number) => {
       },
     },
     orderBy: {
-      createdAt: 'desc'
-    }
+      createdAt: "desc",
+    },
   });
   return shelves;
+};
+
+export const getUserShelf = async (userId: number, shelfname: string) => {
+  const shelf = await prisma.shelf.findUnique({
+    where: {
+      creatorId_shelfname: {
+        creatorId: userId,
+        shelfname,
+      },
+    },
+    include: {
+      _count: {
+        select: {
+          shelfBooks: true,
+        },
+      },
+    },
+  });
+  return shelf;
 };
 
 export const createShelf = async (shelfname: string) => {

@@ -14,6 +14,7 @@ export const getShelfBooks = async (userId: number, shelfname: string) => {
       userBook: {
         include: {
           book: true,
+          shelves: true
         },
       },
     },

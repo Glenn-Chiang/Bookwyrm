@@ -1,4 +1,4 @@
-import { getShelves } from "@/actions/shelves";
+import { getUserShelves } from "@/actions/shelves";
 import { ShelfPreview } from "./components/ShelfPreview";
 import { getCurrentUser } from "@/lib/auth";
 import { CreateShelfButton } from "./components/CreateShelfButton";
@@ -13,7 +13,7 @@ export default async function Shelves({
   const currentUser = await getCurrentUser();
   const IsOwnPage = currentUser.id === userId;
 
-  const shelves = await getShelves(userId);
+  const shelves = await getUserShelves(userId);
 
   return (
     <main className="flex flex-col gap-8 w-full pt-8">
@@ -22,10 +22,7 @@ export default async function Shelves({
       {shelves.length ? (
         <ul className="flex flex-col gap-10">
           {shelves.map((shelf) => (
-            <ShelfPreview
-              key={shelf.shelfname}
-              shelf={shelf}
-            />
+            <ShelfPreview key={shelf.shelfname} shelf={shelf} />
           ))}
         </ul>
       ) : (

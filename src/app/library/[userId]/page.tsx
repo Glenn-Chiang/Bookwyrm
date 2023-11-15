@@ -3,7 +3,7 @@ import { BookEntry } from "./components/BookEntry";
 import { FilterMenu } from "./components/FilterMenu";
 import { SortDropdown } from "./components/SortDropdown";
 import Link from "next/link";
-import { getShelves } from "@/actions/shelves";
+import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
 
 export default async function Library({
@@ -21,8 +21,8 @@ export default async function Library({
 
   const books = await getUserBooks(userId, statusFilter, sortParam);
 
-  const currentUser = await getCurrentUser()
-  const shelves = await getShelves(currentUser.id)
+  const currentUser = await getCurrentUser();
+  const shelves = await getUserShelves(currentUser.id);
 
   return (
     <main className="flex flex-col gap-2 items-center w-full pt-8">
@@ -31,7 +31,7 @@ export default async function Library({
         href={`/library/${userId}/shelves`}
         className="text-sky-500 hover:text-sky-400 font-medium"
       >
-        Browse shelves
+        View shelves
       </Link>
       <FilterMenu />
       <p className="text-slate-500 text-center">
@@ -41,7 +41,7 @@ export default async function Library({
       {books.length ? (
         <ul className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {books.map((book) => (
-            <BookEntry key={book.bookId} userBook={book} shelves={shelves}/>
+            <BookEntry key={book.bookId} userBook={book} shelves={shelves} />
           ))}
         </ul>
       ) : (

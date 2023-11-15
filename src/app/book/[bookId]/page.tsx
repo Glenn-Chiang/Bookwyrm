@@ -4,8 +4,8 @@ import { stripTags } from "@/lib/helpers/stripTags";
 import { BookData } from "@/lib/types";
 import Image from "next/image";
 import { ActionsMenu } from "./components/ActionsMenu";
-import { getShelves } from "@/actions/shelves";
-import { getCurrentUser } from '../../../lib/auth';
+import { getUserShelves } from "@/actions/shelves";
+import { getCurrentUser } from "../../../lib/auth";
 
 const getVolumeInfo = async (bookId: string) => {
   const res = await fetch(
@@ -33,8 +33,8 @@ export default async function BookPage({
     thumbnail: imageLinks?.large || imageLinks?.thumbnail,
   };
 
-  const currentUser = await getCurrentUser()
-  const shelves = await getShelves(currentUser.id)
+  const currentUser = await getCurrentUser();
+  const shelves = await getUserShelves(currentUser.id);
 
   return (
     <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start">
@@ -48,7 +48,11 @@ export default async function BookPage({
             className="rounded "
           />
         )}
-        <ActionsMenu userBook={userBook} bookData={bookData} shelves={shelves}/>
+        <ActionsMenu
+          userBook={userBook}
+          bookData={bookData}
+          shelves={shelves}
+        />
       </section>
       <InfoSection volumeInfo={volumeInfo} />
     </main>
