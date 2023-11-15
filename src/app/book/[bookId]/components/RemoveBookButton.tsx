@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RemoveBookModal } from "../../../../components/RemoveBookModal";
+import { RemoveFromLibraryModal } from "../../../../components/RemoveFromLibraryModal";
 
 type RemoveBookButtonProps = {
   bookId: string;
@@ -19,7 +19,10 @@ export const RemoveBookButton = ({ bookId }: RemoveBookButtonProps) => {
         Remove from Library
       </button>
       {modalIsOpen && (
-        <RemoveBookModal bookId={bookId} close={() => setModalIsOpen(false)} />
+        <RemoveFromLibraryModal
+          bookId={bookId}
+          close={() => setModalIsOpen(false)}
+        />
       )}
     </>
   );

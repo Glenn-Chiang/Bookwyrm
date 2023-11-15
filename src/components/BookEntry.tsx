@@ -3,18 +3,19 @@
 import { updateBookRating, updateBookStatus } from "@/actions/userBooks";
 import { AddToShelvesModal } from "@/components/AddToShelvesModal";
 import { RatingDropdown } from "@/components/RatingDropdown";
-import { RemoveBookModal } from "@/components/RemoveBookModal";
+import { RemoveFromLibraryModal } from "@/components/RemoveFromLibraryModal";
 import { StatusDropdown } from "@/components/StatusDropdown";
 import { ActionButton } from "@/components/buttons";
 import { ReadStatus, UserBookDetail } from "@/lib/types";
 import { Shelf } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 type BookEntryProps = {
   userBook: UserBookDetail;
-  shelves: Shelf[]
+  shelves: Shelf[];
 };
 
 export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
@@ -29,11 +30,21 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   };
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [removeModalIsOpen, setRemoveModalIsOpen] = useState(false);
   const [shelvesModalIsOpen, setShelvesModalIsOpen] = useState(false);
+  const [removeFromShelfModalIsOpen, setRemoveFromShelfModalIsOpen] =
+    useState(false);
+  const [removeFromLibraryModalIsOpen, setRemoveFromLibraryModalIsOpen] =
+    useState(false);
+
+  // Determine whether this component is rendered in a shelf or in 'All Books' page
+  const params = useParams();
+  const onShelfPage = !!params.shelf;
 
   return (
-    <article key={userBook.bookId} className="flex gap-4 p-4 sm:h-[50vh] lg:h-[40vh] shadow">
+    <article
+      key={userBook.bookId}
+      className="flex gap-4 p-4 sm:h-[50vh] lg:h-[40vh] shadow"
+    >
       {thumbnail && (
         <Link href={`/book/${bookId}`} className="w-1/3 h-full">
           <Image
@@ -67,17 +78,22 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
         <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
         {menuIsOpen && (
           <ActionMenu
-            handleClickShelves={() => setShelvesModalIsOpen(true)}
-            handleClickRemove={() => setRemoveModalIsOpen(true)}
+            manageShelves={() => setShelvesModalIsOpen(true)}
+            removeFromShelf={() => setRemoveFromShelfModalIsOpen(true)}
+            removeFromLibrary={() => setRemoveFromLibraryModalIsOpen(true)}
           />
         )}
         {shelvesModalIsOpen && (
-          <AddToShelvesModal userBook={userBook} shelves={shelves} close={() => setShelvesModalIsOpen(false)}/>
+          <AddToShelvesModal
+            userBook={userBook}
+            shelves={shelves}
+            close={() => setShelvesModalIsOpen(false)}
+          />
         )}
-        {removeModalIsOpen && (
-          <RemoveBookModal
+        {removeFromLibraryModalIsOpen && (
+          <RemoveFromLibraryModal
             bookId={bookId}
-            close={() => setRemoveModalIsOpen(false)}
+            close={() => setRemoveFromLibraryModalIsOpen(false)}
           />
         )}
       </div>
@@ -86,24 +102,40 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
 };
 
 type ActionMenuProps = {
-  handleClickShelves: () => void;
-  handleClickRemove: () => void;
+  manageShelves: () => void;
+  removeFromLibrary: () => void;
+  removeFromShelf: () => void;
 };
 // TODO: Close menu when user clicks away from it
 const ActionMenu = ({
-  handleClickShelves,
-  handleClickRemove,
+  manageShelves,
+  removeFromLibrary,
+  removeFromShelf,
 }: ActionMenuProps) => {
+
+  // Determine whether this component is rendered in a shelf or in 'All Books' page
+  // Only show RemoveFromShelf button if user is on a ShelfPage. If user is in 'All Books' page, RemoveFromShelf button is not shown.
+  const params = useParams();
+  const onShelfPage = !!params.shelfname;
+
   return (
     <menu className="z-10 absolute bottom-0 right-12 rounded bg-slate-100 shadow flex flex-col">
       <button
-        onClick={handleClickShelves}
+        onClick={manageShelves}
         className=" rounded-t rounded-b-none p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600 shadow-none"
       >
         Manage shelves
       </button>
+      {onShelfPage && (
+        <button
+          onClick={removeFromShelf}
+          className=" p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600 shadow-none"
+        >
+          Remove from shelf
+        </button>
+      )}
       <button
-        onClick={handleClickRemove}
+        onClick={removeFromLibrary}
         className=" rounded-b rounded-t-none p-2 text-slate-500 hover:bg-slate-200 hover:text-slate-600 shadow-none"
       >
         Remove from library

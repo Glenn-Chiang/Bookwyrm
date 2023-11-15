@@ -1,9 +1,9 @@
 import { getShelfBooks } from "@/actions/shelfBooks";
 import { getUserShelf } from "@/actions/shelves";
 import Link from "next/link";
-import { FilterMenu } from "../../components/FilterMenu";
-import { SortDropdown } from "../../components/SortDropdown";
-import { BookEntry } from "../../components/BookEntry";
+import { FilterMenu } from "@/components/FilterMenu";
+import { SortDropdown } from "@/components/SortDropdown";
+import { BookEntry } from "@/components/BookEntry";
 import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

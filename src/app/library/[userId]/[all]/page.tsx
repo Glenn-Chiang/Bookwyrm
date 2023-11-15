@@ -1,7 +1,7 @@
 import { getUserBooks } from "@/actions/userBooks";
-import { BookEntry } from "../components/BookEntry";
-import { FilterMenu } from "../components/FilterMenu";
-import { SortDropdown } from "../components/SortDropdown";
+import { BookEntry } from "@/components/BookEntry";
+import { FilterMenu } from "@/components/FilterMenu";
+import { SortDropdown } from "@/components/SortDropdown";
 import Link from "next/link";
 import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
