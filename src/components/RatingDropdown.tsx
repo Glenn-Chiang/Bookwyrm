@@ -18,12 +18,11 @@ export const RatingDropdown = ({defaultValue, handleChange}: RatingDropdown) => 
 
   return (
     <div className="flex gap-2 items-center">
-      <label htmlFor="status" className="flex gap-2 items-center">
+      <label className="flex gap-2 items-center">
         <FontAwesomeIcon icon={faStar} />
         Rating
       </label>
       <select
-        id="status"
         className="p-2 rounded-md capitalize bg-slate-100"
         defaultValue={defaultValue || '-'}
         // value={defaultValue || '-'}  

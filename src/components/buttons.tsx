@@ -51,7 +51,7 @@ export const ActionButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       onClick={onClick}
-      className="absolute bottom-1 right-0 sm:right-4 p-2 rounded-full w-8 h-8 shadow-none hover:bg-slate-200 flex justify-center items-center"
+      className="absolute bottom-1 sm:bottom-4 right-0 sm:right-4 p-2 rounded-full w-8 h-8 shadow-none hover:bg-slate-200 flex justify-center items-center"
     >
       <FontAwesomeIcon icon={faEllipsisV} />
     </button>

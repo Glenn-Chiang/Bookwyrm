@@ -42,7 +42,7 @@ export const AddToShelvesModal = ({
 
   return (
     <Modal>
-      <form className="flex flex-col gap-4 h-full max-h-[50vh]"> 
+      <form className="flex flex-col gap-4 h-full max-h-[50vh] sm:max-h-[60vh]"> 
         <h2>
           Your shelves for{" "}
           <span className="text-sky-500 font-medium">{userBook.book.title}</span>
