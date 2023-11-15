@@ -40,7 +40,8 @@ export const AddToShelvesModal = ({
 
   const [isPending, setIsPending] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault()
     setIsPending(true)
     await setBookShelves(userBook.bookId, selectedShelves)
     close()
