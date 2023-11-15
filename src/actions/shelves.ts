@@ -16,6 +16,9 @@ export const getShelves = async (userId: number) => {
         },
       },
     },
+    orderBy: {
+      createdAt: 'desc'
+    }
   });
   return shelves;
 };

@@ -6,8 +6,11 @@ export const ShelfPreview = async ({shelf}: {shelf: Shelf}) => {
   const shelfBooks = await getShelfBooks(shelf.creatorId, shelf.shelfname);
 
   return (
-    <section className="w-full flex flex-col gap-2 ">
-      <h2>{shelf.shelfname}</h2>
+    <section className="w-full flex flex-col gap-4 ">
+      <div className="flex gap-4 items-center ">
+        <h2>{shelf.shelfname}</h2>
+        <span className="text-slate-500">{shelfBooks.length} books</span>
+      </div>
       {shelfBooks.length ? (
         <ul className="bg-slate-200 p-2 rounded-md flex justify-start gap-2 w-full overflow-x-scroll">
           {shelfBooks.map((shelfBook) => (

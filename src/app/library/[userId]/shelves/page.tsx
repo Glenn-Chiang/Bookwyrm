@@ -16,11 +16,11 @@ export default async function Shelves({
   const shelves = await getShelves(userId);
 
   return (
-    <main className="flex flex-col  gap-4 w-full pt-8">
+    <main className="flex flex-col gap-8 w-full pt-8">
       <h1 className="text-center">Shelves</h1>
       <CreateShelfButton />
       {shelves.length ? (
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col gap-8">
           {shelves.map((shelf) => (
             <ShelfPreview
               key={shelf.shelfname}

@@ -17,6 +17,9 @@ export const getShelfBooks = async (userId: number, shelfname: string) => {
         },
       },
     },
+    orderBy: {
+      dateAdded: 'desc'
+    }
   });
   return shelfBooks;
 };
