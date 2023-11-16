@@ -1,14 +1,12 @@
 import { getShelfBooks } from "@/actions/shelfBooks";
-import { getUserShelf } from "@/actions/shelves";
-import Link from "next/link";
+import { getUserShelf, getUserShelves } from "@/actions/shelves";
+import { BookEntry } from "@/components/BookEntry";
 import { FilterMenu } from "@/components/FilterMenu";
 import { SortDropdown } from "@/components/SortDropdown";
-import { BookEntry } from "@/components/BookEntry";
-import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { AddFromLibraryButton } from "./components/AddFromLibraryButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 // TODO:Remove shelf, edit shelfname
 
@@ -36,7 +34,14 @@ export default async function ShelfPage({
           Library
         </Link>
       </nav>
-      <AddFromLibraryButton/>
+
+      <Link
+        href={`${shelfname}/addFromLibrary`}
+        className="bg-sky-100 text-sky-500 hover:bg-sky-200 hover:text-sky-600 p-2 rounded-md"
+      >
+        Add books from your library
+      </Link>
+
       <FilterMenu />
       <p className="text-slate-500 text-center">
         Showing {books.length} book{books.length !== 1 ? "s" : ""}
