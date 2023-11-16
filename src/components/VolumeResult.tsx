@@ -12,18 +12,18 @@ export const VolumeResult = ({volumeId, volumeInfo}: VolumeResultProps) => {
   return (
     <Link
       href={`/book/${volumeId}`}
-      className="flex bg-slate-100 shadow rounded-xl p-4 hover:shadow-md hover:bg-sky-100 hover:text-sky-600 transition"
+      className="w-full flex bg-slate-100 shadow rounded-xl p-4 hover:shadow-md hover:bg-sky-100 hover:text-sky-600 transition"
     >
-      {imageLinks && imageLinks.thumbnail && (
+      {imageLinks && (
         <Image
-          src={imageLinks.thumbnail}
+          src={imageLinks.large || imageLinks.thumbnail}
           alt=""
           width={100}
-          height={200}
-          className="rounded"
+          height={100}
+          className="rounded w-1/5 h-auto"
         />
       )}
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center w-4/5">
         <h2 className="text-center">{title}</h2>
         {authors && <div>{authors.join(", ")}</div>}
         {publisher && <div className="text-slate-500">{publisher}</div>}

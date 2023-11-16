@@ -37,15 +37,15 @@ export default async function BookPage({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start">
-      <section className="flex flex-col gap-4">
+    <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start w-full">
+      <section className="flex flex-col gap-4 py-4 sm:w-1/4 w-3/4">
         {imageLinks && (
           <Image
             src={imageLinks.large || imageLinks.thumbnail}
             alt=""
-            width={240}
-            height={400}
-            className="rounded "
+            width={100}
+            height={100}
+            className="rounded w-full h-auto"
           />
         )}
         <ActionsMenu
@@ -70,8 +70,8 @@ const InfoSection = ({ volumeInfo }: { volumeInfo: VolumeInfo }) => {
     categories,
   } = volumeInfo;
   return (
-    <section className="flex flex-col w-full p-4 gap-4">
-      <h1 className="text-center sm:text-start">{title}</h1>
+    <section className="flex flex-col sm:w-3/4 p-4 gap-4">
+      <h1 className="">{title}</h1>
       {authors && <div className="text-xl">{authors.join(", ")}</div>}
       <div className="text-slate-500 gap-2 flex">
         {publisher && <span>{publisher}</span>}
