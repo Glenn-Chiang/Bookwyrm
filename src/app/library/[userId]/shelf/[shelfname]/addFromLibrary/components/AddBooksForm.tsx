@@ -2,6 +2,7 @@
 
 import { addBooksToShelf } from "@/actions/shelfBooks";
 import { CancelButton, SubmitButton } from "@/components/buttons";
+import { serializeStringToUrl } from "@/lib/helpers/serializeUrlParam";
 import { UserBookDetail } from "@/lib/types";
 import { Book } from "@prisma/client";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export const AddBooksForm = ({
   const handleSubmit = async () => {
     setIsPending(true);
     await addBooksToShelf(shelfname, selectedBooks)
-    router.push(`../${shelfname}`)
+    router.push(`../${serializeStringToUrl(shelfname)}`)
     console.log('Added books to shelf')
   };
 

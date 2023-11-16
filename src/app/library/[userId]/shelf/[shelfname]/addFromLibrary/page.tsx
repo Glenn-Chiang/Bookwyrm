@@ -1,5 +1,6 @@
 import { getUserBooks } from "@/actions/userBooks";
 import { AddBooksForm } from "./components/AddBooksForm";
+import { parseParamFromUrl } from "@/lib/helpers/serializeUrlParam";
 
 export default async function BrowseLibrary({
   params,
@@ -7,7 +8,7 @@ export default async function BrowseLibrary({
   params: { userId: string; shelfname: string };
 }) {
   const userId = Number(params.userId);
-  const shelfname = params.shelfname;
+  const shelfname = parseParamFromUrl(params.shelfname);
   const allBooks = await getUserBooks(userId);
   // Only render books in library that are not in this shelf
   const books = allBooks.filter(

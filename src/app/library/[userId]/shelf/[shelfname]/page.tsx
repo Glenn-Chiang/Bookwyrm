@@ -9,6 +9,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { ActionSection } from "./components/ActionSection";
+import { parseParamFromUrl, serializeStringToUrl } from "@/lib/helpers/serializeUrlParam";
 
 // TODO:Remove shelf, edit shelfname
 
@@ -20,7 +21,7 @@ export default async function ShelfPage({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const userId = Number(params.userId);
-  const shelfname = params.shelfname;
+  const shelfname = parseParamFromUrl(params.shelfname);
 
   const sortParam = searchParams.sort;
   const statusFilter =
@@ -44,12 +45,12 @@ export default async function ShelfPage({
         </div>
         <h1 className="text-center pt-4">{shelfname}</h1>
         <div className="flex-1 flex justify-end p-2 relative">
-          <ActionSection shelfname={shelfname}/>
+          <ActionSection shelfname={shelfname} />
         </div>
       </div>
 
       <Link
-        href={`${shelfname}/addFromLibrary`}
+        href={`${serializeStringToUrl(shelfname)}/addFromLibrary`}
         className="bg-sky-100 text-sky-500 hover:bg-sky-200 hover:text-sky-600 p-2 rounded-md"
       >
         Add books from your library

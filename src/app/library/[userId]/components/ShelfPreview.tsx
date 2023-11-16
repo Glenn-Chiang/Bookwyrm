@@ -1,5 +1,6 @@
 import { getShelfBooks } from "@/actions/shelfBooks";
 import { getUserBooks } from "@/actions/userBooks";
+import { serializeStringToUrl } from "@/lib/helpers/serializeUrlParam";
 import { Book, Shelf } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,14 +20,14 @@ export const ShelfPreview = async ({
     : await getUserBooks(userId);
 
   const shelfUrl = shelfname
-    ? `/library/${userId}/shelf/${shelfname.split(' ').join('-')}`
+    ? `/library/${userId}/shelf/${serializeStringToUrl(shelfname)}`
     : `/library/${userId}/all`;
 
   return (
     <section className="w-full flex flex-col gap-2 ">
       <div className="flex gap-4 items-center ">
         <h2 className="hover:text-sky-500">
-          <Link href={shelfUrl}>{shelfname ? shelfname.split(' ').join('-') : "All"}</Link>
+          <Link href={shelfUrl}>{shelfname ? shelfname : "All"}</Link>
         </h2>
         <span className="text-slate-500">{books.length} books</span>
       </div>

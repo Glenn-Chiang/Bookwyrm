@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { RemoveFromShelfModal } from "./RemoveFromShelfModal";
+import { parseParamFromUrl } from '../lib/helpers/serializeUrlParam';
 
 type BookEntryProps = {
   userBook: UserBookDetail;
@@ -38,7 +39,7 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
     useState(false);
 
   // Determine whether this component is rendered in a shelf or in 'All Books' page
-  const shelfname = useParams().shelfname;
+  const shelfname = parseParamFromUrl(useParams().shelfname);
   const onShelfPage = !!shelfname;
 
   return (
