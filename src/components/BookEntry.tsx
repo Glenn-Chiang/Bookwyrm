@@ -76,7 +76,9 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
             />
           )}
         </div>
-        <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
+        <div className="absolute bottom-1 sm:bottom-4 right-0 sm:right-4 ">
+          <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
+        </div>
         {menuIsOpen && (
           <ActionMenu
             manageShelves={() => setShelvesModalIsOpen(true)}
@@ -100,8 +102,8 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
         )}
         {removeFromLibraryModalIsOpen && (
           <RemoveFromLibraryModal
-          book={userBook.book}
-          close={() => setRemoveFromLibraryModalIsOpen(false)}
+            book={userBook.book}
+            close={() => setRemoveFromLibraryModalIsOpen(false)}
           />
         )}
       </div>

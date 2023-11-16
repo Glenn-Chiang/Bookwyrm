@@ -19,14 +19,14 @@ export const ShelfPreview = async ({
     : await getUserBooks(userId);
 
   const shelfUrl = shelfname
-    ? `/library/${userId}/shelf/${shelfname}`
+    ? `/library/${userId}/shelf/${shelfname.split(' ').join('-')}`
     : `/library/${userId}/all`;
 
   return (
     <section className="w-full flex flex-col gap-2 ">
       <div className="flex gap-4 items-center ">
         <h2 className="hover:text-sky-500">
-          <Link href={shelfUrl}>{shelfname || "All"}</Link>
+          <Link href={shelfUrl}>{shelfname ? shelfname.split(' ').join('-') : "All"}</Link>
         </h2>
         <span className="text-slate-500">{books.length} books</span>
       </div>

@@ -3,10 +3,12 @@ import { getUserShelf, getUserShelves } from "@/actions/shelves";
 import { BookEntry } from "@/components/BookEntry";
 import { FilterMenu } from "@/components/FilterMenu";
 import { SortDropdown } from "@/components/SortDropdown";
+import { ActionButton } from "@/components/buttons";
 import { getCurrentUser } from "@/lib/auth";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { ActionSection } from "./components/ActionSection";
 
 // TODO:Remove shelf, edit shelfname
 
@@ -29,17 +31,22 @@ export default async function ShelfPage({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-4 items-center w-full relative">
-      <h1 className="text-center pt-4">{shelfname}</h1>
-      <nav className="absolute left-0 flex flex-col pt-4">
-        <Link
-          href={`/library/${userId}`}
-          className="text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-          Library
-        </Link>
-      </nav>
+    <main className="flex flex-col gap-4 items-center w-full ">
+      <div className="flex justify-between w-full">
+        <div className="flex-1">
+          <Link
+            href={`/library/${userId}`}
+            className="w-max text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+            Library
+          </Link>
+        </div>
+        <h1 className="text-center pt-4">{shelfname}</h1>
+        <div className="flex-1 flex justify-end p-2 relative">
+          <ActionSection shelfname={shelfname}/>
+        </div>
+      </div>
 
       <Link
         href={`${shelfname}/addFromLibrary`}
