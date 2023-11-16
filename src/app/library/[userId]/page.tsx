@@ -1,7 +1,7 @@
 import { getUserShelves } from "@/actions/shelves";
-import { ShelfPreview } from "./shelf/components/ShelfPreview";
+import { ShelfPreview } from "./components/ShelfPreview";
 import { getCurrentUser } from "@/lib/auth";
-import { CreateShelfButton } from './shelf/components/CreateShelfButton';
+import { CreateShelfButton } from './components/CreateShelfButton';
 
 export default async function Library({
   params,

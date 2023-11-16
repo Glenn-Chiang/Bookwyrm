@@ -8,6 +8,9 @@ import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { AddFromLibraryButton } from "./components/AddFromLibraryButton";
+
+// TODO:Remove shelf, edit shelfname
 
 export default async function ShelfPage({
   params,
@@ -22,7 +25,7 @@ export default async function ShelfPage({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-2 items-center w-full pt-8 relative">
+    <main className="flex flex-col gap-4 items-center w-full pt-8 relative">
       <h1 className="text-center pt-4">{shelfname}</h1>
       <nav className="absolute left-0 flex flex-col pt-4">
         <Link
@@ -33,6 +36,7 @@ export default async function ShelfPage({
           Library
         </Link>
       </nav>
+      <AddFromLibraryButton/>
       <FilterMenu />
       <p className="text-slate-500 text-center">
         Showing {books.length} book{books.length !== 1 ? "s" : ""}

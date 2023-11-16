@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { RemoveFromLibraryModal } from "../../../../components/RemoveFromLibraryModal";
+import { Book } from "@prisma/client";
 
 type RemoveBookButtonProps = {
-  bookId: string;
+  book: Book;
 };
 
-export const RemoveBookButton = ({ bookId }: RemoveBookButtonProps) => {
+export const RemoveBookButton = ({ book }: RemoveBookButtonProps) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
@@ -20,8 +21,8 @@ export const RemoveBookButton = ({ bookId }: RemoveBookButtonProps) => {
       </button>
       {modalIsOpen && (
         <RemoveFromLibraryModal
-          bookId={bookId}
-          close={() => setModalIsOpen(false)}
+        book={book}
+        close={() => setModalIsOpen(false)}
         />
       )}
     </>

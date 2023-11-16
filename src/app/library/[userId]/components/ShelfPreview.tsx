@@ -48,7 +48,7 @@ export const ShelfPreview = async ({
 
 const ShelfBookPreview = ({ book }: { book: Book }) => {
   return (
-    <li className="w-1/5 lg:w-1/6 flex-shrink-0">
+    <Link href={`/book/${book.id}`} className="w-1/5 lg:w-1/6 flex-shrink-0">
       {book.thumbnail && (
         <Image
           src={book.thumbnail}
@@ -58,6 +58,6 @@ const ShelfBookPreview = ({ book }: { book: Book }) => {
           className="rounded w-full h-auto"
         />
       )}
-    </li>
+    </Link>
   );
 };

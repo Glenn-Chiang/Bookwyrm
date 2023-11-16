@@ -59,7 +59,7 @@ export const ActionsMenu = ({
           )}
           {/* <span className="text-slate-500">Added on {userBook.dateAdded.toLocaleDateString()}</span>
             <span className="text-slate-500">Last updated {userBook.updatedAt.toLocaleDateString()}</span> */}
-          <RemoveBookButton bookId={bookData.id} />
+          <RemoveBookButton book={userBook.book} />
         </>
       )}
     </section>
