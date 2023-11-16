@@ -1,7 +1,5 @@
+import { LoadingIndicator } from "@/components/LoadingIndicator";
+
 export default function Loading() {
-  return (
-    <div>
-      Loading...
-    </div>
-  )
+  return <LoadingIndicator />;
 }
