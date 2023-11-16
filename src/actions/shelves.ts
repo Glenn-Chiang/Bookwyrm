@@ -72,18 +72,18 @@ export const deleteShelf = async (shelfname: string) => {
   return shelf;
 };
 
-export const renameShelf = async (shelfname: string) => {
+export const renameShelf = async (currentName: string, newName: string) => {
   const userId = (await getCurrentUser()).id;
 
   const shelf = await prisma.shelf.update({
     where: {
       creatorId_shelfname: {
         creatorId: userId,
-        shelfname,
+        shelfname: currentName,
       },
     },
     data: {
-      shelfname,
+      shelfname: newName,
     },
   });
 

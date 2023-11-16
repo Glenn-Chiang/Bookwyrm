@@ -23,7 +23,7 @@ export const ActionSection = ({ shelfname }: ActionSectionProps) => {
           handleDelete={() => setDeleteModalIsOpen(true)}
         />
       )}
-      {renameModalIsOpen && <RenameShelfModal />}
+      {renameModalIsOpen && <RenameShelfModal shelfname={shelfname} close={() => setRenameModalIsOpen(false)}/>}
       {deleteModalIsOpen && <DeleteShelfModal shelfname={shelfname} close={() => setDeleteModalIsOpen(false)}/>}
     </>
   );

@@ -1,5 +1,6 @@
-export const parseParamFromUrl = (param: string | string[]) => {
-  if (typeof param !== 'string') {
+export const parseParamFromUrl = (param: string | string[] | undefined) => {
+  if (!param) return undefined
+  if (param && typeof param !== 'string') {
     param = param[0]
   }
   return param.split("_").join(" ");
