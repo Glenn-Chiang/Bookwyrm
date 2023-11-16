@@ -27,7 +27,7 @@ export default async function LibraryBooks({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-2 items-center w-full pt-8 relative">
+    <main className="flex flex-col gap-2 items-center w-full relative">
       <h1 className="text-center pt-4">All Books</h1>
       <nav className="absolute left-0 flex flex-col pt-4">
         <Link

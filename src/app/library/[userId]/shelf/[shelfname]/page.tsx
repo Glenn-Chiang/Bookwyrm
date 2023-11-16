@@ -23,7 +23,7 @@ export default async function ShelfPage({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-4 items-center w-full pt-8 relative">
+    <main className="flex flex-col gap-4 items-center w-full relative">
       <h1 className="text-center pt-4">{shelfname}</h1>
       <nav className="absolute left-0 flex flex-col pt-4">
         <Link

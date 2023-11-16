@@ -1,7 +1,6 @@
-export default async function ShelfLayout({library, children}: {library: React.ReactNode, children: React.ReactNode}) {
+export default async function ShelfLayout({children}: {children: React.ReactNode}) {
   return (
     <>
-      {library}
       {children}
     </>
   )
