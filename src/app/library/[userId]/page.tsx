@@ -16,7 +16,7 @@ export default async function Library({
   const shelves = await getUserShelves(userId);
 
   return (
-    <main className="flex flex-col gap-8 w-full pt-8">
+    <main className="flex flex-col gap-8 w-full pt-8 sm:px-4">
       <h1 className="text-center text-3xl">Library</h1>
       <CreateShelfButton />
       <ShelfPreview userId={userId}/>
