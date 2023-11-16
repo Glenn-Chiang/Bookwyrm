@@ -4,6 +4,7 @@ import { createShelf } from "@/actions/shelves";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { Modal } from "@/components/Modal";
 import { CancelButton, SubmitButton } from "@/components/buttons";
+import { shelfnameRegex, shelfnameRule } from "@/lib/constants";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -44,7 +45,10 @@ export const CreateShelfModal = ({ close }: CreateShelfModalProps) => {
         <label htmlFor="shelfname">Shelf name</label>
         <input
           id="shelfname"
-          {...register("shelfname", { required: "Shelf name is required" })}
+          {...register("shelfname", {
+            required: "Shelf name is required",
+            pattern: { value: shelfnameRegex , message: shelfnameRule},
+          })}
           className="bg-slate-100"
         />
         {errors.shelfname?.message && (

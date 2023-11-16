@@ -40,7 +40,6 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
 
   // Determine whether this component is rendered in a shelf or in 'All Books' page
   const shelfname = parseParamFromUrl(useParams().shelfname);
-  const onShelfPage = !!shelfname;
 
   return (
     <article
