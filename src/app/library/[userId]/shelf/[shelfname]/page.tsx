@@ -12,13 +12,19 @@ import Link from "next/link";
 
 export default async function ShelfPage({
   params,
+  searchParams,
 }: {
   params: { userId: string; shelfname: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const userId = Number(params.userId);
   const shelfname = params.shelfname;
-  const shelf = await getUserShelf(userId, shelfname);
-  const books = await getShelfBooks(userId, shelfname);
+
+  const sortParam = searchParams.sort;
+  const statusFilter =
+    searchParams.status === "all" ? undefined : searchParams.status;
+
+  const books = await getShelfBooks(userId, shelfname, statusFilter, sortParam);
   const currentUser = await getCurrentUser();
   const shelves = await getUserShelves(currentUser.id);
 

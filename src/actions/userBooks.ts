@@ -5,6 +5,7 @@ import { ReadStatus, BookData } from "@/lib/types";
 import { getCurrentUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { statusOptions } from "@/lib/constants";
+import { getUserBooksSortOrderObject } from "@/lib/helpers/getSortOrderObject";
 
 // Get books in user's library with given status. If status is not specified, get all books in user's library.
 export const getUserBooks = async (
@@ -20,39 +21,6 @@ export const getUserBooks = async (
     status = undefined;
   }
 
-  type SortOrder =
-    | { book: { title: "asc" } }
-    | { book: { authors: "asc" } }
-    | { rating: {sort : "desc", nulls: "last"} }
-    | { dateAdded: "desc" }
-    | { status: "desc" };
-
-  const getSortOrder = (): SortOrder => {
-    let orderBy: SortOrder;
-
-    switch (sortOrder) {
-      case "title":
-        orderBy = { book: { title: "asc" } };
-        break;
-      case "author":
-        orderBy = { book: { authors: "asc" } };
-        break;
-      case "rating":
-        orderBy = { rating: { sort: "desc", nulls: "last" } };
-        break;
-      case "status":
-        orderBy = { status: "desc" };
-        break
-      case "recent":
-        orderBy = { dateAdded: "desc" };
-        break;
-      default:
-        orderBy = { dateAdded: "desc" };
-    }
-
-    return orderBy;
-  };
-
   const userBooks = await prisma.userBook.findMany({
     where: {
       userId,
@@ -60,11 +28,11 @@ export const getUserBooks = async (
     },
     include: {
       book: true,
-      shelves: true
+      shelves: true,
     },
-    orderBy: getSortOrder(),
+    orderBy: getUserBooksSortOrderObject(sortOrder),
   });
-  
+
   return userBooks;
 };
 
@@ -80,8 +48,8 @@ export const getUserBook = async (bookId: string) => {
     },
     include: {
       book: true,
-      shelves: true
-    }
+      shelves: true,
+    },
   });
   return userBook;
 };
@@ -152,7 +120,7 @@ export const updateBookStatus = async (bookId: string, status: ReadStatus) => {
     },
     data: {
       status,
-      rating: status === 'completed' ? undefined : null // If status is changed to reading or plan-to-read, set rating to null
+      rating: status === "completed" ? undefined : null, // If status is changed to reading or plan-to-read, set rating to null
     },
   });
 

@@ -1,14 +1,32 @@
 "use server";
 
-import prisma from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
+import { statusOptions } from "@/lib/constants";
+import prisma from "@/lib/db";
+import { getShelfBooksSortOrderObject } from "@/lib/helpers/getSortOrderObject";
 import { revalidatePath } from "next/cache";
 
-export const getShelfBooks = async (userId: number, shelfname: string) => {
+export const getShelfBooks = async (
+  userId: number,
+  shelfname: string,
+  status?: string | string[],
+  sortOrder?: string | string[]
+) => {
+  if (status && typeof status !== "string") {
+    status = undefined;
+  }
+  if (status && !statusOptions.includes(status)) {
+    // if invalid status is provided, set status param to undefined, i.e. get all user books
+    status = undefined;
+  }
+
   const shelfBooks = await prisma.shelfBook.findMany({
     where: {
       userId,
       shelfname,
+      userBook: {
+        status
+      }
     },
     include: {
       userBook: {
@@ -18,10 +36,8 @@ export const getShelfBooks = async (userId: number, shelfname: string) => {
         },
       },
     },
-    orderBy: {
-      dateAdded: "desc",
-    },
-  });
+    orderBy: getShelfBooksSortOrderObject(sortOrder)
+  }); 
   return shelfBooks;
 };
 
@@ -76,8 +92,8 @@ export const addBooksToShelf = async (shelfname: string, bookIds: string[]) => {
     skipDuplicates: true,
   });
 
-  revalidatePath('/')
-  return shelfBooks
+  revalidatePath("/");
+  return shelfBooks;
 };
 
 export const addBookToShelf = async (shelfname: string, bookId: string) => {
@@ -110,6 +126,6 @@ export const removeBookFromShelf = async (
     },
   });
 
-  revalidatePath('/')
+  revalidatePath("/");
   return shelfBook;
 };
