@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
     async session({session, token}) {
       // Retrieve userId from token and attach it to session object
       if (session.user) {
-        (session.user as any).id = token.id //TODO: Type for user
+        session.user.id = token.id //TODO: Type for user
       }
       return session
     }

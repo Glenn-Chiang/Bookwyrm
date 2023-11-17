@@ -45,7 +45,7 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
 
   const currentUser = useCurrentUser();
   // Check if current user is the owner of this book
-  const isOwner = currentUser.id === userBook.userId;
+  const isOwner = currentUser?.id === userBook.userId;
 
   // Enables closing of menu by clicking outside
   const menuRef = useRef<HTMLDivElement>(null);

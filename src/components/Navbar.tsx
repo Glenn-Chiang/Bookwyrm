@@ -14,7 +14,7 @@ export const Navbar = () => {
         <Logo size="medium"/>
         Bookwyrm
       </Link>
-      <Link href={`/library/${currentUser.id}`} className="flex gap-2 items-center">
+      <Link href={`/library/${currentUser?.id}`} className="flex gap-2 items-center">
         <FontAwesomeIcon icon={faBookOpenReader}/>
         Your Library
       </Link>
