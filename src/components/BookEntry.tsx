@@ -40,7 +40,8 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
     useState(false);
 
   // Determine whether this component is rendered in a shelf or in 'All Books' page
-  const shelfname = parseParamFromUrl(useParams().shelfname);
+  const shelfnameParam = useParams().shelfname
+  const shelfname = (shelfnameParam) ? parseParamFromUrl(shelfnameParam) : undefined
 
   const currentUser = useCurrentUser();
   // Check if current user is the owner of this book

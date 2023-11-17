@@ -28,16 +28,18 @@ export default async function LibraryBooks({
 
   return (
     <main className="flex flex-col gap-2 items-center w-full relative">
-      <h1 className="text-center pt-4">All Books</h1>
-      <nav className="absolute left-0 flex flex-col pt-4">
-        <Link
-          href={`/library/${userId}`}
-          className="text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-          Library
-        </Link>
-      </nav>
+      <div className="sticky top-0 z-20 bg-white w-screen h-16 px-4 ">
+        <nav className="absolute bottom-2">
+          <Link
+            href={`/library/${userId}`}
+            className="text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+            Library
+          </Link>
+        </nav>
+        <h1 className="text-center pt-4">All Books</h1>
+      </div>
       <FilterMenu />
       <p className="text-slate-500 text-center">
         Showing {books.length} book{books.length !== 1 ? "s" : ""}

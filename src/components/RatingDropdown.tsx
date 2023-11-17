@@ -32,7 +32,7 @@ export const RatingDropdown = ({
       </label>
       {readOnly ? (
         <span className="py-2 px-4 rounded-md capitalize bg-slate-100">
-          {defaultValue}
+          {defaultValue || "-"}
         </span>
       ) : (
         <select
