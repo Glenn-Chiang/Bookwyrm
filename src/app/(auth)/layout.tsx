@@ -18,7 +18,7 @@ export default function AuthLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-sky-200 w-screen h-screen flex justify-center items-center">
+      <body className="bg-sky-200 w-screen h-screen flex justify-center items-center p-4">
         <main className="sm:w-3/4 shadow bg-white rounded-xl flex flex-col gap-4 justify-center items-center p-4">
         {children}
         </main>
