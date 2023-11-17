@@ -7,6 +7,8 @@ import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "@/lib/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { getUser } from "@/actions/users";
+import { LibraryLink } from "@/components/LibraryLink";
 
 export default async function LibraryBooks({
   params,
@@ -22,22 +24,18 @@ export default async function LibraryBooks({
     searchParams.status === "all" ? undefined : searchParams.status;
 
   const books = await getUserBooks(userId, statusFilter, sortParam);
+  const owner = await getUser(userId)
 
   const currentUser = await getCurrentUser();
+  const isOwner = currentUser.id === owner?.id
   const shelves = await getUserShelves(currentUser.id);
 
   return (
     <main className="flex flex-col gap-2 items-center w-full relative">
       <div className="sticky top-0 z-20 bg-white w-screen h-16 px-4 ">
-        <nav className="absolute bottom-2">
-          <Link
-            href={`/library/${userId}`}
-            className="text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-            Library
-          </Link>
-        </nav>
+        <div className="absolute bottom-2">
+          <LibraryLink isOwner={isOwner} ownerId={userId} ownerName={owner?.username}/>
+        </div>
         <h1 className="text-center pt-4">All Books</h1>
       </div>
       <FilterMenu />

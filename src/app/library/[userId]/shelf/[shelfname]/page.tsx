@@ -13,6 +13,8 @@ import {
   parseParamFromUrl,
   serializeStringToUrl,
 } from "@/lib/helpers/serializeUrlParam";
+import { LibraryLink } from "@/components/LibraryLink";
+import { getUser } from "@/actions/users";
 
 // TODO:Remove shelf, edit shelfname
 
@@ -30,7 +32,7 @@ export default async function ShelfPage({
   const statusFilter =
     searchParams.status === "all" ? undefined : searchParams.status;
 
-  const shelf = await getUserShelf(userId, shelfname);
+  const owner = await getUser(userId)
   const books = await getShelfBooks(userId, shelfname, statusFilter, sortParam);
 
   const currentUser = await getCurrentUser();
@@ -41,13 +43,7 @@ export default async function ShelfPage({
     <main className="flex flex-col gap-4 items-center w-full ">
       <div className="sticky top-0 z-20 bg-white w-screen h-16 px-4 ">
         <div className="absolute bottom-2">
-          <Link
-            href={`/library/${userId}`}
-            className="w-max text-sky-500 hover:bg-sky-100 rounded-md p-2 font-medium flex gap-2 items-center"
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-            Library
-          </Link>
+          <LibraryLink ownerId={userId} ownerName={owner?.username} isOwner={isOwner}/>
         </div>
         <h1 className="text-center pt-4">{shelfname}</h1>
 
