@@ -2,7 +2,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 config.autoAddCss = false;
 
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -18,8 +18,10 @@ export default function AuthLayout({
 }) {
   return (
     <html lang="en">
-      <body className="">
+      <body className="bg-sky-200 w-screen h-screen flex justify-center items-center">
+        <main className="sm:w-3/4 shadow bg-white rounded-xl flex flex-col gap-4 justify-center items-center p-4">
         {children}
+        </main>
       </body>
     </html>
   );

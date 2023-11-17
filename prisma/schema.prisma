@@ -9,7 +9,8 @@ datasource db {
 
 model User {
   id         Int         @id @default(autoincrement())
-  username   String      @unique
+  email      String      @unique
+  username   String
   shelves    Shelf[]
   books      UserBook[] // all books added by user 
   shelfBooks ShelfBook[] // books added by user to specific shelves
