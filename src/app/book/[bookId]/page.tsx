@@ -6,6 +6,10 @@ import Image from "next/image";
 import { ActionsMenu } from "./components/ActionsMenu";
 import { getUserShelves } from "@/actions/shelves";
 import { getCurrentUser } from "../../../lib/auth";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { BackButton } from "./components/BackButton";
 
 const getVolumeInfo = async (bookId: string) => {
   const res = await fetch(
@@ -37,25 +41,28 @@ export default async function BookPage({
   const shelves = await getUserShelves(currentUser.id);
 
   return (
-    <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start w-full">
-      <section className="flex flex-col gap-4 py-4 sm:w-1/4 w-3/4">
-        {imageLinks && (
-          <Image
-            src={imageLinks.large || imageLinks.thumbnail}
-            alt=""
-            width={100}
-            height={100}
-            className="rounded w-full h-auto"
+    <>
+      <BackButton/>
+      <main className="flex flex-col gap-4 items-center sm:flex-row sm:items-start w-full">
+        <section className="flex flex-col gap-4 py-4 sm:w-1/4 w-3/4">
+          {imageLinks && (
+            <Image
+              src={imageLinks.large || imageLinks.thumbnail}
+              alt=""
+              width={100}
+              height={100}
+              className="rounded w-full h-auto"
+            />
+          )}
+          <ActionsMenu
+            userBook={userBook}
+            bookData={bookData}
+            shelves={shelves}
           />
-        )}
-        <ActionsMenu
-          userBook={userBook}
-          bookData={bookData}
-          shelves={shelves}
-        />
-      </section>
-      <InfoSection volumeInfo={volumeInfo} />
-    </main>
+        </section>
+        <InfoSection volumeInfo={volumeInfo} />
+      </main>
+    </>
   );
 }
 
