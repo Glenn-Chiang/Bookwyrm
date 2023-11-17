@@ -12,7 +12,7 @@ export const BackButton = () => {
   return (
     <button
       onClick={handleClick}
-      className="w-max self-start p-2 flex gap-2 items-center rounded-md text-sky-500 hover:bg-sky-100"
+      className="w-max self-start p-2 flex gap-2 items-center rounded-md text-sky-500 hover:bg-sky-100 shadow-none"
     >
       <FontAwesomeIcon icon={faChevronLeft} />
       Back

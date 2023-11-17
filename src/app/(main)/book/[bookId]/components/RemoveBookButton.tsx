@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { RemoveFromLibraryModal } from "../../../../components/RemoveFromLibraryModal";
 import { Book } from "@prisma/client";
+import { RemoveFromLibraryModal } from "@/components/RemoveFromLibraryModal";
 
 type RemoveBookButtonProps = {
   book: Book;

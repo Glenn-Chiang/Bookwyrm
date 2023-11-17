@@ -1,15 +1,15 @@
 "use client";
 
 import { updateBookRating, updateBookStatus } from "@/actions/userBooks";
+import { AddToShelvesModal } from "@/components/AddToShelvesModal";
 import { RatingDropdown } from "@/components/RatingDropdown";
 import { StatusDropdown } from "@/components/StatusDropdown";
 import { BookData, ReadStatus, UserBookDetail } from "@/lib/types";
-import { Shelf, UserBook } from "@prisma/client";
-import { ShelvesButton } from "./ShelvesButton";
+import { Shelf } from "@prisma/client";
+import { useState } from "react";
 import { AddBookButton } from "./AddBookButton";
 import { RemoveBookButton } from "./RemoveBookButton";
-import { useState } from "react";
-import { AddToShelvesModal } from "@/components/AddToShelvesModal";
+import { ShelvesButton } from "./ShelvesButton";
 
 type ActionsMenuProps = {
   bookData: BookData;

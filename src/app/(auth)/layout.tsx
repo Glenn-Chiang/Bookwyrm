@@ -19,7 +19,7 @@ export default function AuthLayout({
   return (
     <html lang="en">
       <body className="">
-
+        {children}
       </body>
     </html>
   );

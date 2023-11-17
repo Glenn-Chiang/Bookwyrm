@@ -1,14 +1,11 @@
+import { getUserShelves } from "@/actions/shelves";
 import { getUserBook } from "@/actions/userBooks";
 import { VolumeInfo } from "@/lib/books-api/types";
 import { stripTags } from "@/lib/helpers/stripTags";
 import { BookData } from "@/lib/types";
 import Image from "next/image";
+import { getCurrentUser } from "@/lib/auth";
 import { ActionsMenu } from "./components/ActionsMenu";
-import { getUserShelves } from "@/actions/shelves";
-import { getCurrentUser } from "../../../lib/auth";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { BackButton } from "./components/BackButton";
 
 const getVolumeInfo = async (bookId: string) => {
