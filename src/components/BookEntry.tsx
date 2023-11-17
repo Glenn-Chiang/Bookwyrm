@@ -13,7 +13,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { RemoveFromShelfModal } from "./RemoveFromShelfModal";
-import { parseParamFromUrl } from '../lib/helpers/serializeUrlParam';
+import { parseParamFromUrl } from "../lib/helpers/serializeUrlParam";
+import { useCurrentUser } from "@/lib/auth";
 
 type BookEntryProps = {
   userBook: UserBookDetail;
@@ -41,6 +42,10 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   // Determine whether this component is rendered in a shelf or in 'All Books' page
   const shelfname = parseParamFromUrl(useParams().shelfname);
 
+  const currentUser = useCurrentUser();
+  // Check if current user is the owner of this book
+  const isOwner = currentUser.id === userBook.userId;
+
   return (
     <article
       key={userBook.bookId}
@@ -66,19 +71,23 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
         </div>
         <div className="flex flex-col gap-2">
           <StatusDropdown
+            readOnly={!isOwner}
             defaultValue={userBook.status as ReadStatus}
             handleChange={handleStatusChange}
           />
           {userBook.status === "completed" && (
             <RatingDropdown
+              readOnly={!isOwner}
               defaultValue={userBook.rating}
               handleChange={handleRatingChange}
             />
           )}
         </div>
-        <div className="absolute bottom-1 sm:bottom-4 right-0 sm:right-4 ">
-          <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
-        </div>
+        {isOwner && (
+          <div className="absolute bottom-1 sm:bottom-4 right-0 sm:right-4 ">
+            <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
+          </div>
+        )}
         {menuIsOpen && (
           <ActionMenu
             manageShelves={() => setShelvesModalIsOpen(true)}

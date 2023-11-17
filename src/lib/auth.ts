@@ -1,4 +1,4 @@
-const currentUser = {id: 1}
+const currentUser = {id: 2}
 
 export const useCurrentUser = () => {
   return currentUser

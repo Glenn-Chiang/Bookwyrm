@@ -7,11 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type StatusDropdownProps = {
   defaultValue: ReadStatus;
   handleChange: (status: ReadStatus) => void;
+  readOnly?: boolean
 };
 
 export const StatusDropdown = ({
   defaultValue,
   handleChange,
+  readOnly
 }: StatusDropdownProps) => {
 
   const statusOptions = [
@@ -40,21 +42,28 @@ export const StatusDropdown = ({
         <FontAwesomeIcon icon={faBarsProgress} />
         Status
       </label>
-      <select
-        className={`p-2 rounded-md capitalize bg-slate-100 ${style}`}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      >
-        {statusOptions.map((status, index) => (
-          <option
-            key={index}
-            value={status.value}
-            className={statusOptions[index].style}
-          >
-            {status.value}
-          </option>
-        ))}
-      </select>
+      {readOnly ? (
+        <span className={`p-2 rounded-md capitalize bg-slate-100 ${style}`}>
+          {defaultValue}
+        </span>
+      ) : (
+        <select
+          className={`p-2 rounded-md capitalize bg-slate-100 ${style}`}
+          defaultValue={defaultValue}
+          onChange={onChange}
+        >
+          {statusOptions.map((status, index) => (
+            <option
+              key={index}
+              value={status.value}
+              className={statusOptions[index].style}
+            >
+              {status.value}
+            </option>
+          ))}
+        </select>
+      )}
     </div>
   );
 };
+
