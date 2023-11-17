@@ -20,9 +20,11 @@ export default async function Library({
   return (
     <main className="flex flex-col gap-8 w-full pt-8 sm:px-4">
       <h1 className="text-center text-3xl">
-        <span className="text-sky-500">
-          {isOwner ? "Your" : `${owner?.username}'s`}
-        </span>{" "}
+        {isOwner ? (
+          "Your"
+        ) : (
+          <span className="text-sky-500">{`${owner?.username}'s`}</span>
+        )}{" "}
         Library
       </h1>
       {isOwner && <CreateShelfButton />}

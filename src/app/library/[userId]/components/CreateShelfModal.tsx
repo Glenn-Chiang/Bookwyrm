@@ -6,7 +6,7 @@ import { Modal } from "@/components/Modal";
 import { CancelButton, SubmitButton } from "@/components/buttons";
 import { shelfnameRegex, shelfnameRule } from "@/lib/constants";
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type CreateShelfModalProps = {
   close: () => void;
@@ -24,14 +24,17 @@ export const CreateShelfModal = ({ close }: CreateShelfModalProps) => {
   } = useForm<CreateShelfFormFields>();
 
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<null | string>(null);
+  const [error, setError] = useState<null | string >(null);
 
   const onSubmit: SubmitHandler<CreateShelfFormFields> = async (formFields) => {
     try {
       setIsPending(true);
-      const shelf = await createShelf(formFields.shelfname);
-      console.log('Shelf created:', shelf.shelfname)
-      close();
+      const res = await createShelf(formFields.shelfname);
+      if (res.status === 'success') {
+        close();
+      } else {
+        setError(res.message)
+      }
     } catch (error) {
       setError((error as Error).message);
     }
@@ -47,7 +50,7 @@ export const CreateShelfModal = ({ close }: CreateShelfModalProps) => {
           id="shelfname"
           {...register("shelfname", {
             required: "Shelf name is required",
-            pattern: { value: shelfnameRegex , message: shelfnameRule},
+            pattern: { value: shelfnameRegex, message: shelfnameRule },
           })}
           className="bg-slate-100"
         />

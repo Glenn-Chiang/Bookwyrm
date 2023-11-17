@@ -3,6 +3,7 @@
 import prisma from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
 
 export const getUserShelves = async (userId: number) => {
   const shelves = await prisma.shelf.findMany({
@@ -45,15 +46,30 @@ export const getUserShelf = async (userId: number, shelfname: string) => {
 export const createShelf = async (shelfname: string) => {
   const userId = (await getCurrentUser()).id;
   // TODO: Handle duplicate shelfnames
-  const shelf = await prisma.shelf.create({
-    data: {
-      creatorId: userId,
-      shelfname,
-    },
-  });
 
-  revalidatePath("/");
-  return shelf;
+try {
+    const shelf = await prisma.shelf.create({
+      data: {
+        creatorId: userId,
+        shelfname,
+      },
+    });
+    revalidatePath("/");
+    return {status: 'success', message: `Shelf ${shelfname} created`};
+  
+} catch (error) {
+  if (
+    error instanceof Prisma.PrismaClientKnownRequestError &&
+    error.code === "P2002"
+  ) {
+    return {
+      status: 'error',
+      message:
+        "You already have a shelf with this name. Shelfnames must be unique.",
+    };
+  }
+  return {status: 'error', message: (error as Error).message}
+}
 };
 
 export const deleteShelf = async (shelfname: string) => {
