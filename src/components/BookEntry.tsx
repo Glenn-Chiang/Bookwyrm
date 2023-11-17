@@ -11,7 +11,7 @@ import { Shelf } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RemoveFromShelfModal } from "./RemoveFromShelfModal";
 import { parseParamFromUrl } from "../lib/helpers/serializeUrlParam";
 import { useCurrentUser } from "@/lib/auth";
@@ -46,6 +46,27 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   const currentUser = useCurrentUser();
   // Check if current user is the owner of this book
   const isOwner = currentUser.id === userBook.userId;
+
+  // Enables closing of menu by clicking outside
+  const menuRef = useRef<HTMLDivElement>(null);
+  const hideMenu = (event: MouseEvent) => {
+    if (
+      menuRef.current &&
+      event.target instanceof Node &&
+      !menuRef.current.contains(event.target)
+    ) {
+      setMenuIsOpen(false);
+    }
+  };
+  useEffect(() => {
+    if (menuIsOpen) {
+      document.addEventListener("click", hideMenu);
+    } else {
+      document.removeEventListener("click", hideMenu);
+    }
+
+    return () => document.removeEventListener("click", hideMenu);
+  }, [menuIsOpen]);
 
   return (
     <article
@@ -90,11 +111,13 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
           </div>
         )}
         {menuIsOpen && (
-          <ActionMenu
-            manageShelves={() => setShelvesModalIsOpen(true)}
-            removeFromShelf={() => setRemoveFromShelfModalIsOpen(true)}
-            removeFromLibrary={() => setRemoveFromLibraryModalIsOpen(true)}
-          />
+          <div ref={menuRef}>
+            <ActionMenu
+              manageShelves={() => setShelvesModalIsOpen(true)}
+              removeFromShelf={() => setRemoveFromShelfModalIsOpen(true)}
+              removeFromLibrary={() => setRemoveFromLibraryModalIsOpen(true)}
+            />
+          </div>
         )}
         {shelvesModalIsOpen && (
           <AddToShelvesModal

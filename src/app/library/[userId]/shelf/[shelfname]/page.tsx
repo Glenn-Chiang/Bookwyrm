@@ -16,8 +16,6 @@ import {
 import { LibraryLink } from "@/components/LibraryLink";
 import { getUser } from "@/actions/users";
 
-// TODO:Remove shelf, edit shelfname
-
 export default async function ShelfPage({
   params,
   searchParams,
