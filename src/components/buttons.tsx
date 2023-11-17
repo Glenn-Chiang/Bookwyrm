@@ -1,4 +1,6 @@
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+'use client'
+
+import { faChevronUp, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -57,3 +59,15 @@ export const ActionButton = ({ onClick }: { onClick: () => void }) => {
     </button>
   );
 };
+
+// Button to go to top of screen
+export const TopButton = () => {
+  const handleClick = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+  }
+  return (
+    <button onClick={handleClick} className="fixed bottom-4 right-4 bg-sky-500 shadow text-white rounded-full w-10 h-10">
+      <FontAwesomeIcon icon={faChevronUp}/>
+    </button>
+  )
+}

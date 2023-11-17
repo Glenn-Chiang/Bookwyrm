@@ -46,7 +46,7 @@ export default async function ShelfPage({
         <h1 className="text-center pt-4">{shelfname}</h1>
 
         {isOwner && (
-          <div className="absolute right-2 bottom-2">
+          <div className="absolute right-2 bottom-2 ">
             <ActionSection shelfname={shelfname} />
           </div>
         )}
