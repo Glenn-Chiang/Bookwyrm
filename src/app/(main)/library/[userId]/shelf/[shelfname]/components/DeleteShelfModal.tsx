@@ -1,7 +1,6 @@
 import { deleteShelf } from "@/actions/shelves";
 import { Modal } from "@/components/Modal";
 import { CancelButton, SubmitButton } from "@/components/buttons";
-import { isPending } from "@reduxjs/toolkit";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
