@@ -35,7 +35,7 @@ export default async function BookPage({
   };
 
   const currentUser = await getCurrentUser();
-  const shelves = await getUserShelves(currentUser.id);
+  const shelves = await getUserShelves(currentUser?.id);
 
   return (
     <>

@@ -24,7 +24,8 @@ export const authOptions: NextAuthOptions = {
         await prisma.user.create({
           data: {
             username: user.name || 'Anonymous',
-            email: user.email
+            email: user.email,
+            avatarUrl: user.image
           }
         })
       }

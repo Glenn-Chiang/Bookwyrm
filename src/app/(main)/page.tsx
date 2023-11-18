@@ -10,7 +10,6 @@ export default function Home({searchParams}: {searchParams: { [key: string]: str
         Bookwyrm
       </h1>
       <section className="flex flex-col w-full sm:w-4/5 p-4">
-        <h2>Search for a book</h2>
         <Searchbar/>
       </section>
       <SearchResults searchTerm={searchParams.search as string | undefined}/>

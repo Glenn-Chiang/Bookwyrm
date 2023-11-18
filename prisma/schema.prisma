@@ -11,6 +11,7 @@ model User {
   id         Int         @id @default(autoincrement())
   email      String      @unique
   username   String
+  avatarUrl  String?
   shelves    Shelf[]
   books      UserBook[] // all books added by user 
   shelfBooks ShelfBook[] // books added by user to specific shelves

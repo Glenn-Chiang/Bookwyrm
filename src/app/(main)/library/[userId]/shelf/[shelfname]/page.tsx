@@ -34,8 +34,8 @@ export default async function ShelfPage({
   const books = await getShelfBooks(userId, shelfname, statusFilter, sortParam);
 
   const currentUser = await getCurrentUser();
-  const shelves = await getUserShelves(currentUser.id);
-  const isOwner = currentUser.id === userId;
+  const shelves = await getUserShelves(currentUser?.id);
+  const isOwner = currentUser?.id === userId;
 
   return (
     <main className="flex flex-col gap-4 items-center w-full ">
@@ -46,7 +46,7 @@ export default async function ShelfPage({
         <h1 className="text-center pt-4">{shelfname}</h1>
 
         {isOwner && (
-          <div className="absolute right-2 bottom-">
+          <div className="absolute right-2 bottom-4">
             <ActionSection shelfname={shelfname} />
           </div>
         )}

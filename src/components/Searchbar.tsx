@@ -19,7 +19,8 @@ export const Searchbar = () => {
     <input
       autoFocus
       onKeyDown={handleKeydown}
-      className="border-b-2 focus:outline-none border-sky-500 p-2 rounded-none"
+      placeholder="Search books..."
+      className="border-b-2 focus:outline-none border-sky-500 p-2 rounded-none placeholder:"
     />
   );
 };

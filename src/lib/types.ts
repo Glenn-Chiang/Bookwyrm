@@ -16,4 +16,15 @@ const userBookDetail = Prisma.validator<Prisma.UserBookDefaultArgs>()({
   },
 });
 
+const userDetail = Prisma.validator<Prisma.UserDefaultArgs>()({
+  include: {
+    _count: {
+      select: {
+        books: true,
+      },
+    },
+  },
+});
+
 export type UserBookDetail = Prisma.UserBookGetPayload<typeof userBookDetail>;
+export type UserDetail = Prisma.UserGetPayload<typeof userDetail>

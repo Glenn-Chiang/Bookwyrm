@@ -9,3 +9,16 @@ export const getUser = async (userId: number) => {
 
   return user
 }
+
+export const getUsers = async () => {
+  const users = await prisma.user.findMany({
+    include: {
+      _count: {
+        select: {
+          books: true
+        }
+      }
+    }
+  })
+  return users
+}
