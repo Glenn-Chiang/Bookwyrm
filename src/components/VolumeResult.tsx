@@ -25,8 +25,8 @@ export const VolumeResult = ({volumeId, volumeInfo}: VolumeResultProps) => {
       )}
       <div className="flex flex-col items-center w-4/5">
         <h2 className="text-center">{title}</h2>
-        {authors && <div>{authors.join(", ")}</div>}
-        {publisher && <div className="text-slate-500">{publisher}</div>}
+        {authors && <div className="text-center">{authors.join(", ")}</div>}
+        {publisher && <div className="text-slate-500 text-center">{publisher}</div>}
       </div>
     </Link>
   );
