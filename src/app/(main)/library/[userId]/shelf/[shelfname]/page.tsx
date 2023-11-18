@@ -39,8 +39,8 @@ export default async function ShelfPage({
 
   return (
     <main className="flex flex-col gap-4 items-center w-full ">
-      <div className="sticky top-0 z-20 bg-white w-screen h-16 px-4 ">
-        <div className="absolute bottom-2">
+      <div className="sticky top-0 z-20 bg-white w-screen h-16 sm:px-4 ">
+        <div className="absolute bottom-0 sm:bottom-2">
           <LibraryLink ownerId={userId} ownerName={owner?.username} isOwner={isOwner}/>
         </div>
         <h1 className="text-center pt-4">{shelfname}</h1>

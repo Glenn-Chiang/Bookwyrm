@@ -20,7 +20,7 @@ export const Navbar = () => {
           className="flex sm:gap-2 items-center flex-col sm:flex-row text-"
         >
           <FontAwesomeIcon icon={faBookOpenReader} />
-          Your Library
+          Library
         </Link>
         <Link
           href={"/community"}

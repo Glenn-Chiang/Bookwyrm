@@ -71,7 +71,7 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
   return (
     <article
       key={userBook.bookId}
-      className="flex gap-4 p-4 sm:h-[50vh] lg:h-[40vh] shadow"
+      className="flex gap-4 p-4 sm:h-[50vh] lg:h-[40vh] shadow rounded-md"
     >
       {thumbnail && (
         <Link href={`/book/${bookId}`} className="w-1/3 h-full">
@@ -106,7 +106,7 @@ export const BookEntry = ({ userBook, shelves }: BookEntryProps) => {
           )}
         </div>
         {isOwner && (
-          <div className="absolute bottom-1 sm:bottom-4 right-0 sm:right-4 ">
+          <div className="flex justify-end">
             <ActionButton onClick={() => setMenuIsOpen((prev) => !prev)} />
           </div>
         )}
