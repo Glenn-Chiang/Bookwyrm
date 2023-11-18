@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "../app/api/auth/[...nextauth]/route";
 
 // Get current user on client-side
 export const useCurrentUser = () => {
