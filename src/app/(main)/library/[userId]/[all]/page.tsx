@@ -29,7 +29,7 @@ export default async function LibraryBooks({
 
   return (
     <main className="flex flex-col gap-2 items-center w-full relative">
-      <div className="sticky top-0 z-20 bg-white w-screen h-16 px-4 ">
+      <div className="sticky top-0 z-20 bg-white w-screen h-16 sm:px-4 ">
         <div className="absolute bottom-2">
           <LibraryLink isOwner={isOwner} ownerId={userId} ownerName={owner?.username}/>
         </div>

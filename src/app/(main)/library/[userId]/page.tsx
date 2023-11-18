@@ -19,7 +19,7 @@ export default async function Library({
 
   return (
     <main className="flex flex-col gap-8 w-full pt-8 sm:px-4">
-      <h1 className="text-center text-3xl">
+      <h1 className="text-center ">
         {isOwner ? (
           "Your"
         ) : (

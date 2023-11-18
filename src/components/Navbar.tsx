@@ -17,7 +17,7 @@ export const Navbar = () => {
       <div className="flex gap-4 items-center">
         <Link
           href={`/library/${currentUser?.id}`}
-          className="flex sm:gap-2 items-center flex-col sm:flex-row"
+          className="flex sm:gap-2 items-center flex-col sm:flex-row text-"
         >
           <FontAwesomeIcon icon={faBookOpenReader} />
           Your Library
