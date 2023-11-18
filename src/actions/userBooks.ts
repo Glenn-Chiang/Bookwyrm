@@ -37,7 +37,7 @@ export const getUserBooks = async (
 };
 
 export const getUserBook = async (bookId: string) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const userBook = await prisma.userBook.findUnique({
     where: {
@@ -66,7 +66,7 @@ export const addBookToUser = async (
   }
 
   const { id: bookId, title, authors, thumbnail } = bookData;
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   // Create entry for book if no user has added this book before
   await prisma.book.upsert({
@@ -92,7 +92,7 @@ export const addBookToUser = async (
 
 // Remove book from user's library. The book will be removed from all the user's shelves.
 export const removeBookFromUser = async (bookId: string) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const userBook = await prisma.userBook.delete({
     where: {
@@ -109,7 +109,7 @@ export const removeBookFromUser = async (bookId: string) => {
 
 // Mark as 'completed', 'reading' or 'plan-to-read'
 export const updateBookStatus = async (bookId: string, status: ReadStatus) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const userBook = await prisma.userBook.update({
     where: {
@@ -132,7 +132,7 @@ export const updateBookRating = async (
   bookId: string,
   rating: number | null
 ) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const userBook = await prisma.userBook.update({
     where: {

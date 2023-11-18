@@ -43,7 +43,7 @@ export const getShelfBooks = async (
 
 // Given a list of shelves that this book should be in, compare this given list with the current shelves the book is already in. Perform the necessary addition/removal of this book from shelves to emulate the given list.
 export const setBookShelves = async (bookId: string, shelfnames: string[]) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   // Add this book to any shelves in the given list that it is not currently in
   for (const shelfname of shelfnames) {
@@ -77,7 +77,7 @@ export const setBookShelves = async (bookId: string, shelfnames: string[]) => {
 
 // Add multiple books to shelf by bookId
 export const addBooksToShelf = async (shelfname: string, bookIds: string[]) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const booksToAdd = bookIds.map((bookId) => {
     return {
@@ -97,7 +97,7 @@ export const addBooksToShelf = async (shelfname: string, bookIds: string[]) => {
 };
 
 export const addBookToShelf = async (shelfname: string, bookId: string) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const shelfBook = await prisma.shelfBook.create({
     data: {
@@ -114,7 +114,7 @@ export const removeBookFromShelf = async (
   shelfname: string,
   bookId: string
 ) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const shelfBook = await prisma.shelfBook.delete({
     where: {

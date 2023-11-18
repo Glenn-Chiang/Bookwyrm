@@ -1,14 +1,11 @@
+import { getUserShelves } from "@/actions/shelves";
 import { getUserBooks } from "@/actions/userBooks";
+import { getUser } from "@/actions/users";
 import { BookEntry } from "@/components/BookEntry";
 import { FilterMenu } from "@/components/FilterMenu";
-import { SortDropdown } from "@/components/SortDropdown";
-import Link from "next/link";
-import { getUserShelves } from "@/actions/shelves";
-import { getCurrentUser } from "@/lib/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { getUser } from "@/actions/users";
 import { LibraryLink } from "@/components/LibraryLink";
+import { SortDropdown } from "@/components/SortDropdown";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function LibraryBooks({
   params,
@@ -27,8 +24,8 @@ export default async function LibraryBooks({
   const owner = await getUser(userId)
 
   const currentUser = await getCurrentUser();
-  const isOwner = currentUser.id === owner?.id
-  const shelves = await getUserShelves(currentUser.id);
+  const isOwner = currentUser?.id === owner?.id
+  const shelves = await getUserShelves(currentUser?.id);
 
   return (
     <main className="flex flex-col gap-2 items-center w-full relative">

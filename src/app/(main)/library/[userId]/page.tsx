@@ -12,7 +12,7 @@ export default async function Library({
   const userId = Number(params.userId);
 
   const currentUser = await getCurrentUser();
-  const isOwner = currentUser.id === userId;
+  const isOwner = currentUser?.id === userId;
 
   const shelves = await getUserShelves(userId);
   const owner = await getUser(userId);

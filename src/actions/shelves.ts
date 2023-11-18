@@ -44,7 +44,7 @@ export const getUserShelf = async (userId: number, shelfname: string) => {
 };
 
 export const createShelf = async (shelfname: string) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   try {
     const shelf = await prisma.shelf.create({
@@ -71,7 +71,7 @@ export const createShelf = async (shelfname: string) => {
 };
 
 export const deleteShelf = async (shelfname: string) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const shelf = await prisma.shelf.delete({
     where: {
@@ -87,7 +87,7 @@ export const deleteShelf = async (shelfname: string) => {
 };
 
 export const renameShelf = async (currentName: string, newName: string) => {
-  const userId = (await getCurrentUser()).id;
+  const userId = (await getCurrentUser())?.id;
 
   const shelf = await prisma.shelf.update({
     where: {
