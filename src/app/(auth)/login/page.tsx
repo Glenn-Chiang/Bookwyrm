@@ -2,10 +2,9 @@
 
 import { Logo } from "@/components/Logo";
 import { SubmitButton } from "@/components/buttons";
-import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from 'next/image';
+import { useState } from "react";
 
 export default function Login() {
   const [isPending, setIsPending] = useState(false);
