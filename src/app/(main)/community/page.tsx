@@ -2,6 +2,7 @@ import { getUsers } from "@/actions/users";
 import { UserDetail } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
+export const revalidate = 0;
 
 export default async function Community() {
   const users = await getUsers();
