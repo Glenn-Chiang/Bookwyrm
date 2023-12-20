@@ -12,7 +12,7 @@ export const VolumeResult = ({volumeId, volumeInfo}: VolumeResultProps) => {
   return (
     <Link
       href={`/book/${volumeId}`}
-      className="w-full flex gap-2 bg-slate-100 shadow rounded-xl p-4 hover:shadow-md hover:bg-sky-100 hover:text-sky-600 transition"
+      className="w-full flex justify-center gap-2 bg-slate-100 shadow rounded-xl p-4 hover:shadow-md hover:bg-sky-100 hover:text-sky-600 transition"
     >
       {imageLinks && (
         <Image
