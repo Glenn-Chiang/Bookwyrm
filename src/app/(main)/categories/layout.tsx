@@ -14,7 +14,7 @@ export default function CategoriesLayout({
   const categories = ["classics", "fantasy", "mystery", "philosophy", "history", "science"];
 
   return (
-    <main>
+    <main className="w-full">
       <h1 className="fixed top-16 h-16 bg-white z-10 w-screen flex justify-center items-center gap-2 shadow left-0">
         <FontAwesomeIcon icon={faBookOpen} />
         Browse books
@@ -24,7 +24,7 @@ export default function CategoriesLayout({
           <CategoryTab key={category} category={category} />
         ))}
       </nav>
-      <section className="mt-28">{children}</section>
+      <section className="mt-28 w-full">{children}</section>
     </main>
   );
 }

@@ -32,7 +32,7 @@ export const Navbar = async () => {
           className="flex sm:gap-2 items-center flex-col sm:flex-row"
         >
           <FontAwesomeIcon icon={faUsers} />
-          Community
+          Users
         </Link>
       </div>
     </nav>
