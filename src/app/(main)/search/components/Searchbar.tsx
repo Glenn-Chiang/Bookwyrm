@@ -12,7 +12,7 @@ export const Searchbar = () => {
     if (event.key !== "Enter") return; // Fire on enter
 
     const searchTerm = event.currentTarget.value;
-    router.push(`/?search=${searchTerm}`);
+    router.push(`?search=${searchTerm}`);
   };
 
   return (
