@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { Paginator } from "../components/Paginator";
 
 export default async function CategoryPage({
   params,
@@ -23,22 +24,7 @@ export default async function CategoryPage({
 
   return (
     <>
-      <div className="flex justify-between py-2">
-        <Link
-          href={`?page=${prevPage}`}
-          className="flex gap-2 items-center p-2 rounded-md bg-sky-100 text-sky-500"
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-          Prev
-        </Link>
-        <Link
-          href={`?page=${nextPage}`}
-          className="flex gap-2 items-center p-2 rounded-md bg-sky-100 text-sky-500"
-        >
-          Next
-          <FontAwesomeIcon icon={faChevronRight} />
-        </Link>
-      </div>
+      <Paginator prevPage={prevPage} nextPage={nextPage}/>
       {
         volumes.length ?
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
@@ -52,6 +38,7 @@ export default async function CategoryPage({
       </ul>
         : <p className="text-center text-slate-500">No books to display</p>
       }
+      <Paginator prevPage={prevPage} nextPage={nextPage}/>
     </>
   );
 }
