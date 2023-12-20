@@ -10,7 +10,7 @@ const getVolumes = async (searchTerm: string) => {
   const res = await fetch(
     `https://www.googleapis.com/books/v1/volumes?q=${queryString}&maxResults=${40}&key=${
       process.env.BOOKS_API_KEY
-    }`
+    }`, 
   );
   const volumeResults: VolumeData[] = (await res.json()).items;
   const volumes = volumeResults.map((item) => {

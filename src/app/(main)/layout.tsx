@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="">
         <AuthProvider>
           <Navbar />
-          <main className="flex min-h-screen flex-col items-center py-20 px-2 sm:px-4 w-full">
+          <main className="flex min-h-screen flex-col items-center gap-8 py-20 px-2 sm:px-4 w-full">
             {children}
           </main>
           <TopButton />
