@@ -11,7 +11,7 @@ export default function CategoriesLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const categories = ["classics", "philosophy", "science"];
+  const categories = ["classics", "fantasy", "mystery", "philosophy", "history", "science"];
 
   return (
     <main>
@@ -19,7 +19,7 @@ export default function CategoriesLayout({
         <FontAwesomeIcon icon={faBookOpen} />
         Browse books
       </h1>
-      <nav className="fixed left-0 top-28 h-16 w-screen z-10 bg-white flex justify-center items-center gap-4 capitalize">
+      <nav className="shadow overflow-x-scroll sm:overflow-x-hidden sm:justify-center fixed left-0 px-4 top-28 h-16 w-full z-10 bg-white flex items-center gap-4 capitalize">
         {categories.map((category) => (
           <CategoryTab key={category} category={category} />
         ))}

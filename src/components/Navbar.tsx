@@ -7,8 +7,8 @@ import { faBookOpenReader, faUsers } from "@fortawesome/free-solid-svg-icons";
 export const Navbar = async () => {
   const currentUser = await getCurrentUser()
   return (
-    <nav className="fixed h-16 left-0 top-0 w-screen flex items-center justify-start gap-8 z-20 px-2 font-medium bg-sky-500 text-white">
-      <Link href={"/"} className="flex gap-2 items-center text-xl ">
+    <nav className="fixed h-16 left-0 top-0 w-screen flex items-center justify-start gap-8 z-20 px-2 bg-sky-500 text-white">
+      <Link href={"/categories"} className="flex gap-2 items-center text-xl ">
         <Logo size="medium" />
         Bookwyrm
       </Link>

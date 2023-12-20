@@ -1,14 +1,16 @@
 import { VolumeResult } from "@/components/VolumeResult";
 import { VolumeData } from "@/lib/books-api/types";
 
-export default async function CategoryPage({params}:{params: {categoryName: string}}) {
+export default async function CategoryPage({
+  params,
+}: {
+  params: { categoryName: string };
+}) {
   const category = params.categoryName;
   const volumes = await getVolumesBySubject(category);
 
   return (
-    <>
-      
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
         {volumes.map((volume) => (
           <VolumeResult
             key={volume.id}
@@ -17,19 +19,20 @@ export default async function CategoryPage({params}:{params: {categoryName: stri
           />
         ))}
       </ul>
-    </>
   );
 }
 
-const getVolumesBySubject = async (subject: string) => {
+export const getVolumesBySubject = async (subject: string) => {
   const res = await fetch(
-  `https://www.googleapis.com/books/v1/volumes?q=subject:${subject}&maxResults=${40}&key=${
-    process.env.BOOKS_API_KEY
-  }`
+    `https://www.googleapis.com/books/v1/volumes?q=subject:${subject}&maxResults=${40}&key=${
+      process.env.BOOKS_API_KEY
+    }`
   );
   const volumeResults: VolumeData[] = (await res.json()).items;
-  const volumes = volumeResults.map((item) => {
-    return { ...item.volumeInfo, id: item.id };
-  });
+  const volumes = volumeResults
+    ? volumeResults.map((item) => {
+        return { ...item.volumeInfo, id: item.id };
+      })
+    : [];
   return volumes;
-}
+};

@@ -8,7 +8,7 @@ export const CategoryTab = ({ category }: { category: string }) => {
   const isActive = currentCategory === category
 
   return (
-    <Link href={category} className={`p-2 rounded-full ${isActive && "bg-sky-100 text-sky-500"}`}>
+    <Link href={`/categories/${category}`} className={`p-2 w-max rounded-full ${isActive ? "bg-sky-100 text-sky-500" : "hover:bg-slate-100"}`}>
       {category}
     </Link>
   );
