@@ -3,22 +3,31 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'books.google.com'
+        protocol: "http",
+        hostname: "books.google.com",
       },
       {
-        protocol: 'https',
-        hostname: 'google.com'
+        protocol: "https",
+        hostname: "google.com",
       },
       {
-        protocol: 'https',
-        hostname: '**'
-      }
-    ]
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
   },
   experimental: {
-    serverActions: true
-  }
-}
+    serverActions: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/categories",
+        permanent: true,
+      },
+    ];
+  },
+};
 
 module.exports = nextConfig
