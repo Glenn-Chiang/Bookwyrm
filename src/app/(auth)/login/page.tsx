@@ -1,5 +1,6 @@
 "use client";
 
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { Logo } from "@/components/Logo";
 import { SubmitButton } from "@/components/buttons";
 import { signIn } from "next-auth/react";
@@ -8,10 +9,15 @@ import { useState } from "react";
 
 export default function Login() {
   const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<string | null>(null)
 
   const signInWithGoogle = async () => {
-    setIsPending(true);
-    await signIn("google", { callbackUrl: "/" }); // Redirect to home page on sign in
+    try {
+      setIsPending(true);
+      await signIn("google", { callbackUrl: "/" }); // Redirect to home page on sign in
+    } catch (error) {
+      setError((error as Error).message)
+    }
   };
 
   return (
@@ -26,6 +32,7 @@ export default function Login() {
       <Image src={'https://google.com/favicon.ico'} alt="" width={20} height={20}/>
         Login with Google
       </SubmitButton>
+      <ErrorMessage message="Something went wrong"/>
     </>
   );
 }
