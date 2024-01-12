@@ -32,7 +32,7 @@ export default function Login() {
       <Image src={'https://google.com/favicon.ico'} alt="" width={20} height={20}/>
         Login with Google
       </SubmitButton>
-      <ErrorMessage message="Something went wrong"/>
+      {error && <ErrorMessage message="Something went wrong"/>}
     </>
   );
 }
